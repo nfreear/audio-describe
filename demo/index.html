@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<style>
+my-player {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  display: block;
+  min-height: 300px;
+}
+</style>
+
+<title> Audio Description Test </title>
+
+<h1> Audio Description Test </h1>
+
+<p><label><input id="checkAD" type="checkbox" checked> Audio description</label></p>
+
+<my-player
+  X_data-vimeo-url="https://vimeo.com/1006361470"
+  data-track-url="../tracks/sailing-bib-bear.ad.en.vtt"
+>
+</my-player>
+
+
+<p><button id="speakButton">Speak test</button></p>
+
+
+<script type="importmap">
+{
+  "imports": {
+    "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
+    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js",
+    "app": "../index.js"
+  }
+}
+</script>
+
+
+<script type="module">
+  import demoApp from 'app';
+
+  // https://vimeo.com/creativecommons/cc0
+  demoApp('https://vimeo.com/1006361470');
+</script>
+
+</html>
