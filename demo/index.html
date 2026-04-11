@@ -1,26 +1,21 @@
 <!doctype html>
 <html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<style>
-my-player {
-  background-color: #eee;
-  border: 1px solid #ddd;
-  display: block;
-  min-height: 300px;
-}
-</style>
+<link rel="stylesheet" href="assets/style.css">
 
-<title> Audio Description Test </title>
+<title> Synthetic & Extended Audio Description </title>
 
-<h1> Audio Description Test </h1>
+<h1> Synthetic & Extended Audio Description — Test </h1>
 
 <p><label><input id="checkAD" type="checkbox" checked> Audio description</label></p>
 
-<my-player
-  X_data-vimeo-url="https://vimeo.com/1006361470"
-  data-track-url="../tracks/sailing-bib-bear.ad.en.vtt"
+<sead-player
+  data-media-url="https://vimeo.com/1006361470"
+  data-track-url="../tracks/sailing-bib-bear.ext-ad.en.vtt"
 >
-</my-player>
+</sead-player>
 
 
 <p><button id="speakButton">Speak test</button></p>
@@ -38,10 +33,10 @@ my-player {
 
 
 <script type="module">
-  import demoApp from 'app';
+  import { demoApp } from 'app';
 
   // https://vimeo.com/creativecommons/cc0
-  demoApp('https://vimeo.com/1006361470');
+  demoApp();
 </script>
 
 </html>

@@ -3,13 +3,15 @@ import { parse } from '@plussub/srt-vtt-parser';
 const { fetch } = globalThis;
 
 /**
- * Fetch and parse a WebVTT file, containing JSON meta-data.
+ * Fetch and parse a WebVTT file, optionally containing JSON meta-data.
  *
  * @copyright Nick Freear, 10-April-2026.
  * @see https://w3.org/TR/webvtt1/#introduction-metadata
  * @see https://codepen.io/nfreear/pen/myrzjXz
  */
 export default class MetaVttParser {
+  #entries;
+
   async fetchAndParse (resource, options) {
     const response = await fetch(resource, options);
     const rawVTT = await response.text();
@@ -28,6 +30,13 @@ export default class MetaVttParser {
         return { from, to, text, id, meta: null };
       }
     });
-    return { entries }
+    this.#entries = entries;
+
+    return { entries };
+  }
+
+  findByTime (seconds) {
+    const millis = 1000 * parseInt(seconds);
+    return this.#entries.find(({ from, to }) => millis >= from && millis <= to);
   }
 }

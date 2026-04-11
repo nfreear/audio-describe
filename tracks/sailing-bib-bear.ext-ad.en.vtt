@@ -1,7 +1,7 @@
 WEBVTT
 
 NOTE
-Audio Description demo.
+Extended Audio Description demo.
 "Sailing Bib Bear Lake from the sky", by Tim Hanley.
 https://vimeo.com/1006361470
 Duration: 01:39.
@@ -26,5 +26,19 @@ Aerial shots of a sailing yacht heeling in the breeze.
 Under a blue sky.
 
 4
-00:00:16.000 --> 00:00:19.000
-Now the yacht is sailing down wind. Parallel with the wooded shore. EXTENDED.
+00:00:16.000 --> 00:00:17.000
+This is extended audio description!
+
+5
+00:00:18.000 --> 00:00:18.400
+Now the yacht is sailing down wind, parallel with the shore.
+
+6
+00:00:18.500 --> 00:00:19.000
+{
+  "pauseMedia": 3000
+}
+
+7
+00:00:22.500 --> 00:00:23.000
+End of extended audio description.

@@ -1,9 +1,13 @@
 {
   "private": true,
+  "type": "module",
   "devDependencies": {
+    "eslint": "^9.39.4",
+    "neostandard": "^0.13.0",
     "servor": "^4.0.2"
   },
   "scripts": {
+    "lint": "npx eslint",
     "start": "npx servor"
   }
 }

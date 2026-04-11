@@ -1,34 +1,33 @@
-import Player from '@vimeo/player';
+import SEADPlayer from './src/ExAudioDescriptionPlayer.js';
 import SynthAudioDescriber from './src/SynthAudioDescriber.js';
+import MetaVttParser from './src/MetaVttParser.js';
 
 /**
  * @copyright Nick Freear, 10-April-2026.
  */
-export default async function demoApp (url) {
-  const speakButton = document.querySelector('#speakButton');
+async function demoApp () {
+  const testButton = document.querySelector('#speakButton');
   const audioDescribe = document.querySelector('#checkAD');
-  const containerElem = document.querySelector('my-player');
+  const containerElem = document.querySelector('sead-player');
 
-  const player = new Player(containerElem, {
-    url, // : 'https://vimeo.com/1006361470',
-    width: 640
+  const seadPlayer = new SEADPlayer(containerElem, {
+    describeCallback: () => audioDescribe.checked,
+    mediaUrl: containerElem.dataset.mediaUrl, // 'https://vimeo.com/1006361470',
+    trackUrl: containerElem.dataset.trackUrl,
+    width: 640,
+    dnt: true
   });
 
-  const trackUrl = containerElem.dataset.trackUrl;
+  await seadPlayer.initialize();
 
-  const describer = new SynthAudioDescriber(trackUrl);
-  await describer.fetchAndParse();
-
-  player.on('timeupdate', (ev) => describer.onTimeupdateEvent(ev, audioDescribe.checked));
-  player.on('play', (ev) => console.debug('Play video:', player.element.title, ev));
-  player.on('error', (ev) => console.error('Vimeo Error:', ev));
-
-  await player.ready();
-
-  console.debug('Vimeo player ready:', player);
-
-  speakButton.addEventListener('click', (ev) => {
-    describer.speak('Hello world!');
+  testButton.addEventListener('click', (ev) => {
+    seadPlayer.speak('Hello world!');
     console.debug('Click to speak:', ev);
   });
 }
+
+export {
+  demoApp, MetaVttParser, SynthAudioDescriber, SEADPlayer
+};
+
+export default SEADPlayer;

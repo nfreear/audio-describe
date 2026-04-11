@@ -9,19 +9,19 @@ const { speechSynthesis, SpeechSynthesisUtterance } = globalThis;
  * @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind-keyword-descriptions
  */
 export default class SynthAudioDescriber {
-  #trackUrl;
-  #entries;
+  #parser;
   #spoken = [];
+  #metadataCallback;
 
-  constructor (trackUrl) {
-    this.#trackUrl = trackUrl;
+  onMetadata (callbackFN) {
+    this.#metadataCallback = callbackFN;
   }
 
-  async fetchAndParse () {
-    const parser = new MetaVttParser();
-    const { entries } = await parser.fetchAndParse(this.#trackUrl);
+  async fetchAndParse (trackUrl) {
+    console.assert(typeof this.#metadataCallback === 'function', 'Missing onMetadata function');
 
-    this.#entries = entries;
+    this.#parser = new MetaVttParser();
+    const { entries } = await this.#parser.fetchAndParse(trackUrl);
 
     console.debug('VTT entries:', entries);
   }
@@ -30,22 +30,23 @@ export default class SynthAudioDescriber {
     // https://github.com/vimeo/player.js#timeupdate
     const { seconds } = ev;
 
-    const entry = this.#findEntry(seconds);
-    if (entry && entry.text && describe) {
-      // console.debug('Pre-speak:', entry);
-      this.#speakOnce(entry.text);
+    const entry = this.#parser.findByTime(seconds);
+    if (entry) {
+      if (entry.text && describe) {
+        this.#speakOnce(entry.text);
+        // .
+      } else if (entry.meta) {
+        this.#metadataCallback(entry, ev);
+      } else {
+        console.error('Unexpected entry:', entry);
+      }
     }
-    console.debug('timeupdate', describe, entry, ev);
-  }
-
-  #findEntry (seconds) {
-    const millis = parseInt(1000 * seconds);
-    return this.#entries.find(({ from, to }) => millis >= from && millis <= to);
+    console.debug('timeupdate:', describe, entry, ev);
   }
 
   #speakOnce (text) {
     if (this.#spoken.find((it) => it === text)) {
-      console.debug('No speak:', text);
+      // console.debug('No speak:', text);
     } else {
       this.#spoken.push(text);
 
