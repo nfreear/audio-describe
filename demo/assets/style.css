@@ -5,8 +5,14 @@ sead-player {
   min-height: 300px;
 
   &[ data-ext-pause = true ] {
-    outline: 3px solid red;
+    outline: 3px solid darkorange;
   }
+}
+
+::part(select),
+::part(button) {
+  font-size: .95rem;
+  padding: .2rem .6rem;
 }
 
 label {

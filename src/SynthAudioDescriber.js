@@ -12,9 +12,13 @@ export default class SynthAudioDescriber {
   #parser;
   #spoken = [];
   #metadataCallback;
+  #voice;
 
-  onMetadata (callbackFN) {
-    this.#metadataCallback = callbackFN;
+  set onMetadata (callbackFN) { this.#metadataCallback = callbackFN; }
+  get onMetadata () { return this.#metadataCallback; }
+
+  constructor () {
+    window.addEventListener('voice-select', (ev) => this.#onVoiceSelect(ev));
   }
 
   async fetchAndParse (trackUrl) {
@@ -56,7 +60,18 @@ export default class SynthAudioDescriber {
 
   speak (text) {
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = this.#voice;
     speechSynthesis.speak(utterance);
     console.debug('Speak:', text);
+  }
+
+  #onVoiceSelect (ev) {
+    console.assert(ev.detail, 'Missing event detail');
+    console.assert(ev.detail.voice, 'Missing voice');
+    const { voice } = ev.detail;
+
+    this.#voice = voice;
+
+    console.debug('onVoiceSelect:', voice, ev);
   }
 }

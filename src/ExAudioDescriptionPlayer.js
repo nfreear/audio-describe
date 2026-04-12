@@ -35,7 +35,7 @@ export default class ExAudioDescriptionPlayer {
     });
 
     this.#describer = new SynthAudioDescriber();
-    this.#describer.onMetadata((entry, ev) => this.#onMetadata(entry, ev));
+    this.#describer.onMetadata = (entry, ev) => this.#onMetadata(entry, ev);
 
     await this.#describer.fetchAndParse(this.#opt.trackUrl);
 

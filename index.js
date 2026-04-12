@@ -1,6 +1,9 @@
 import SEADPlayer from './src/ExAudioDescriptionPlayer.js';
 import SynthAudioDescriber from './src/SynthAudioDescriber.js';
 import MetaVttParser from './src/MetaVttParser.js';
+import VoiceSelectElement from './src/util/VoiceSelectElement.js';
+
+const { customElements } = globalThis;
 
 /**
  * @copyright Nick Freear, 10-April-2026.
@@ -9,6 +12,8 @@ async function demoApp () {
   const testButton = document.querySelector('#speakButton');
   const audioDescribe = document.querySelector('#checkAD');
   const containerElem = document.querySelector('sead-player');
+
+  customElements.define('voice-select', VoiceSelectElement);
 
   const seadPlayer = new SEADPlayer(containerElem, {
     describeCallback: () => audioDescribe.checked,
