@@ -1,0 +1,86 @@
+WEBVTT
+
+NOTE
+Extended Audio Description demo.
+"Committee on the Rights of Persons with Disabilities (CRPD)", by UN Human Rights.
+Media URL: https://youtu.be/dX2zmMSLkj4
+Duration: 00:37.
+More URL: https://www.ohchr.org/TreatyBodies
+
+
+UN EAD 0
+00:00:00.000 --> 00:00:00.600
+{
+  "justA": "test"
+}
+
+UN EAD 1
+00:00:01.000 --> 00:00:01.400
+An animation of a person with a white stick and glasses walking along a road.
+
+UN EAD 2
+00:00:01.500 --> 00:00:02.100
+{
+  "pauseMedia": 4500
+}
+
+UN EAD 3
+00:00:07.000 --> 00:00:07.400
+The person bashes into a digger, and turns
+
+UN EAD 4
+00:00:07.500 --> 00:00:08.100
+{
+  "pauseMedia": 4000
+}
+
+UN EAD 5
+00:00:13.000 --> 00:00:13.400
+The person now walks into a wall. They are trapped!
+
+UN EAD 6
+00:00:13.500 --> 00:00:14.100
+{
+  "pauseMedia": 4000
+}
+
+UN EAD 7
+00:00:17.000 --> 00:00:17.400
+The shot zooms out revealing our protagonist trapped in the centre of a maze.
+
+UN EAD 8
+00:00:17.500 --> 00:00:18.100
+{
+  "pauseMedia": 5000
+}
+
+UN EAD 9
+00:00:20.000 --> 00:00:20.400
+"States have to eliminate obstacles to accessibility for persons with disabilities"
+Quote from article 9 UN Committee on the Rights of Persons with Disabilities (CRPD)
+
+UN EAD 10
+00:00:20.500 --> 00:00:21.100
+{
+  "pauseMedia": 10000
+}
+
+UN EAD 11
+00:00:32.000 --> 00:00:32.400
+To find out more visit, www DOT O-H-C-H-R DOT org SLASH TreatyBodies (all one word).
+
+UN EAD 12
+00:00:32.500 --> 00:00:33.100
+{
+  "pauseMedia": 9000
+}
+
+UN EAD 13
+00:00:35.000 --> 00:00:35.400
+Things don't have rights. People do.
+
+UN EAD 14
+00:00:35.500 --> 00:00:36.100
+{
+  "pauseMedia": 4000
+}

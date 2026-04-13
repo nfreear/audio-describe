@@ -23,7 +23,7 @@
 </main>
 
 <footer>
-  <p>Source: <a href="https://github.com/nfreear/audio-describe">@nfreear/audio-describe</a></p>
+  <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
 </footer>
 
 
@@ -31,38 +31,16 @@
 {
   "imports": {
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js",
-    "app": "../src/util/app.js"
+    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js"
   }
 }
 </script>
 
 
 <script type="module">
-  import queryApp from 'app';
+  import queryApp from '../src/util/app.js';
 
   queryApp();
-</script>
-
-
-<script type="XX_module">
-  import YTPlayer from '../src/util/YoutubePlayer.js';
-
-  const ELEM = document.querySelector('#player');
-
-  runPlayer();
-
-  async function runPlayer () {
-    const player = new YTPlayer(ELEM, {
-      url: 'https://youtu.be/M7lc1UVf-VE',
-      // videoId: 'M7lc1UVf-VE'
-    });
-
-    player.on('timeupdate', (ev) => console.debug('timeupdate:', ev));
-
-    await player.ready();
-    console.debug('Ready!!');
-  }
 </script>
 
 </html>

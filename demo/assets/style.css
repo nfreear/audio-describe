@@ -51,6 +51,11 @@ main {
   margin: 2rem 0;
 }
 
+footer {
+  border-top: 2px solid silver;
+  margin-top: 4rem;
+}
+
 body {
   font-family: sans-serif;
   margin: auto;
@@ -60,4 +65,5 @@ body {
 
 * {
   outline-offset: .3rem;
+  text-underline-offset: .2rem;
 }

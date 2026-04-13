@@ -24,7 +24,7 @@
 </main>
 
 <footer>
-  <p>Source: <a href="https://github.com/nfreear/audio-describe">@nfreear/audio-describe</a></p>
+  <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
 </footer>
 
 
@@ -32,26 +32,17 @@
 {
   "imports": {
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js",
-    "index": "../index.js"
+    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js"
   }
 }
 </script>
 
 
 <script type="module">
-  import { AudioDescribeElement, VoiceSelectElement } from 'index';
+  import { AudioDescribeElement, VoiceSelectElement } from '../index.js';
 
   customElements.define('sead-player', AudioDescribeElement);
   customElements.define('voice-select', VoiceSelectElement);
-</script>
-
-
-<script type="XX_module">
-  import { demoApp } from 'app';
-
-  // https://vimeo.com/creativecommons/cc0
-  demoApp();
 </script>
 
 </html>
