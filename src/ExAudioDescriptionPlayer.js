@@ -1,4 +1,5 @@
-import Player from '@vimeo/player';
+import VimeoPlayer from '@vimeo/player';
+import YoutubePlayer from './util/YoutubePlayer.js';
 import SynthAudioDescriber from './SynthAudioDescriber.js';
 
 /**
@@ -13,6 +14,19 @@ export default class ExAudioDescriptionPlayer {
   #describer;
   #pauseID;
 
+  get #playerKlass () {
+    const { provider } = this.#opt;
+    console.assert(/^(vimeo|youtube)/.test(provider), `Unexpected provider: ${provider}`);
+    const providers = {
+      vimeo: VimeoPlayer,
+      youtube: YoutubePlayer
+    };
+    /* if (!providers[this.#opt.provider]) {
+      console.error('Error: unexpected provider,', this.#opt.provider);
+    } */
+    return providers[provider];
+  }
+
   constructor (containerElement, options) {
     this.#containerElem = containerElement;
     this.#opt = options;
@@ -22,13 +36,16 @@ export default class ExAudioDescriptionPlayer {
 
   #assertTests () {
     console.assert(this.#containerElem, 'Missing container element');
-    console.assert(typeof this.#opt.describeCallback === 'function', 'Missing describeCallback function');
+    console.assert(typeof this.#opt.isEnabledCallback === 'function', 'Missing isEnabledCallback function');
     console.assert(this.#opt.mediaUrl, 'Missing mediaUrl');
     console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)');
+    console.assert(this.#opt.provider, 'Missing provider');
   }
 
   async initialize () {
-    this.#player = new Player(this.#containerElem, {
+    const PlayerKlass = this.#playerKlass;
+
+    this.#player = new PlayerKlass(this.#containerElem, {
       url: this.#opt.mediaUrl,
       width: this.#opt.width ?? 640,
       dnt: this.#opt.dnt ?? false
@@ -39,7 +56,7 @@ export default class ExAudioDescriptionPlayer {
 
     await this.#describer.fetchAndParse(this.#opt.trackUrl);
 
-    this.#player.on('timeupdate', (ev) => this.#describer.onTimeupdateEvent(ev, this.#opt.describeCallback()));
+    this.#player.on('timeupdate', (ev) => this.#describer.onTimeupdateEvent(ev, this.#opt.isEnabledCallback()));
     this.#player.on('play', (ev) => console.debug('Play video:', this.#player.element.title, ev));
     this.#player.on('error', (ev) => console.error('Vimeo Error:', ev));
 

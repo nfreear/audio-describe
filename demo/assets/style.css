@@ -7,6 +7,13 @@ sead-player {
   &[ data-ext-pause = true ] {
     outline: 3px solid darkorange;
   }
+
+  &::part(label) {
+    background-color: #fafafa;
+    border: 1px solid silver;
+    display: inline-block;
+    padding: .5rem .2rem;
+  }
 }
 
 ::part(select),
@@ -24,6 +31,10 @@ label {
 
 h1 {
   font-size: 1.8rem;
+}
+
+main {
+  margin: 2rem 0;
 }
 
 body {

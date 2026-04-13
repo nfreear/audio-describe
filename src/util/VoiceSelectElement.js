@@ -21,6 +21,8 @@ export default class VoiceSelectElement extends HTMLElement {
    */
   get #locale () { return this.getAttribute('locale') ?? 'en'; }
 
+  get #label () { return this.getAttribute('label') ?? 'Voice '; }
+
   connectedCallback () {
     const root = this.attachShadow({ mode: 'open' });
     const { label, select, button } = this.#createElements();
@@ -50,7 +52,7 @@ export default class VoiceSelectElement extends HTMLElement {
 
     label.setAttribute('for', 'select');
     select.id = 'select';
-    label.textContent = 'Voice ';
+    label.textContent = this.#label;
     button.textContent = 'Test';
 
     label.setAttribute('part', 'label');

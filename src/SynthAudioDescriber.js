@@ -35,8 +35,8 @@ export default class SynthAudioDescriber {
     const { seconds } = ev;
 
     const entry = this.#parser.findByTime(seconds);
-    if (entry) {
-      if (entry.text && describe) {
+    if (entry && describe) {
+      if (entry.text) {
         this.#speakOnce(entry.text);
         // .
       } else if (entry.meta) {

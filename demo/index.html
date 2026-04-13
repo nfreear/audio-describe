@@ -9,18 +9,23 @@
 
 <h1> Synthetic & Extended Audio Description — Test </h1>
 
-<p><voice-select locale="en-(gb|ie|au)"></voice-select></p>
+<main>
 
-<p><label><input id="checkAD" type="checkbox" checked> Audio description</label></p>
+<p><voice-select locale="en-(gb|ie|au)"></voice-select></p>
 
 <sead-player
   data-media-url="https://vimeo.com/1006361470"
   data-track-url="../tracks/sailing-bib-bear.ext-ad.en.vtt"
+  data-provider="vimeo"
 >
+  <a href="https://vimeo.com/1006361470">Demo video</a>
 </sead-player>
 
+</main>
 
-<p><button id="speakButton">Speak test</button></p>
+<footer>
+  <p>Source: <a href="https://github.com/nfreear/audio-describe">@nfreear/audio-describe</a></p>
+</footer>
 
 
 <script type="importmap">
@@ -35,6 +40,14 @@
 
 
 <script type="module">
+  import { AudioDescribeElement, VoiceSelectElement } from 'app';
+
+  customElements.define('sead-player', AudioDescribeElement);
+  customElements.define('voice-select', VoiceSelectElement);
+</script>
+
+
+<script type="XX_module">
   import { demoApp } from 'app';
 
   // https://vimeo.com/creativecommons/cc0
