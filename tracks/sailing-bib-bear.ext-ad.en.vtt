@@ -27,7 +27,7 @@ Under a blue sky.
 
 SA EAD 4
 00:00:16.000 --> 00:00:17.000
-This is extended audio description!
+The next line is extended audio description!
 
 SA EAD 5
 00:00:18.000 --> 00:00:18.400
@@ -36,7 +36,7 @@ Now the yacht is sailing down wind, parallel with the shore.
 SA EAD 6
 00:00:18.600 --> 00:00:19.100
 {
-  "pauseMedia": 3000
+  "pauseMedia": 4000
 }
 
 SA EAD 7

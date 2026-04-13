@@ -24,14 +24,14 @@ The proposed solution combines:
 
 An example of [WebVTT][vtt:meta] containing extended audio description and metadata:
 
-```
+```vtt
 WEBVTT
 
 ...
 
 4
 00:00:16.000 --> 00:00:17.000
-This is extended audio description!
+The next line is extended audio description!
 
 5
 00:00:18.000 --> 00:00:18.400

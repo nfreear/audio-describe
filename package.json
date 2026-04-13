@@ -1,6 +1,13 @@
 {
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./app": "./src/utils/app.js"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "devDependencies": {
     "eslint": "^9.39.4",
     "neostandard": "^0.13.0",

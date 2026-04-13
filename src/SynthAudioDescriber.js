@@ -9,6 +9,7 @@ const { speechSynthesis, SpeechSynthesisUtterance } = globalThis;
  * @see https://html.spec.whatwg.org/multipage/media.html#attr-track-kind-keyword-descriptions
  */
 export default class SynthAudioDescriber {
+  #delayMS = 300;
   #parser;
   #spoken = [];
   #metadataCallback;
@@ -41,6 +42,11 @@ export default class SynthAudioDescriber {
         // .
       } else if (entry.meta) {
         this.#metadataCallback(entry, ev);
+
+        // For WebVTT file: "vbde2" - it works!
+        if (entry.meta.text) {
+          setTimeout(() => this.#speakOnce(entry.meta.text), this.#delayMS);
+        }
       } else {
         console.error('Unexpected entry:', entry);
       }

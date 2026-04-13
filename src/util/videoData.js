@@ -1,8 +1,16 @@
+/**
+ * Demo videos with WebVTT audio description tracks.
+ */
 const DATA = [
   {
-    id: 'vbde1',
+    id: 'vbde2',
     title: 'Christmas at …',
     rights: '© All rights reserved.',
+    mediaUrl: 'https://youtu.be/HgHj3g68Tr4',
+    trackUrl: '../tracks/visit-britain-downton-v2.ext-ad.en.vtt',
+    provider: 'youtube'
+  }, {
+    id: 'vbdex',
     mediaUrl: 'https://youtu.be/HgHj3g68Tr4',
     trackUrl: '../tracks/visit-britain-downton.ext-ad.en.vtt',
     provider: 'youtube'
