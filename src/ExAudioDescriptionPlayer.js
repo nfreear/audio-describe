@@ -13,19 +13,21 @@ export default class ExAudioDescriptionPlayer {
   #player;
   #describer;
   #pauseID;
+  #lastFromTime;
 
-  get #playerKlass () {
+  get #isEnabledFN () { return this.#opt.isEnabledCallback; }
+
+  #getPlayerKlass () {
     const { provider } = this.#opt;
     console.assert(/^(vimeo|youtube)/.test(provider), `Unexpected provider: ${provider}`);
     const providers = {
       vimeo: VimeoPlayer,
       youtube: YoutubePlayer
     };
-    /* if (!providers[this.#opt.provider]) {
-      console.error('Error: unexpected provider,', this.#opt.provider);
-    } */
     return providers[provider];
   }
+
+  // TODO: get element () { return this.#player.element; }
 
   constructor (containerElement, options) {
     this.#containerElem = containerElement;
@@ -36,14 +38,15 @@ export default class ExAudioDescriptionPlayer {
 
   #assertTests () {
     console.assert(this.#containerElem, 'Missing container element');
-    console.assert(typeof this.#opt.isEnabledCallback === 'function', 'Missing isEnabledCallback function');
+    console.assert(typeof this.#isEnabledFN === 'function', 'Missing isEnabledCallback');
+    console.assert(typeof this.#opt.onStateChange === 'function', 'Missing onStateChange function');
     console.assert(this.#opt.mediaUrl, 'Missing mediaUrl');
     console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)');
     console.assert(this.#opt.provider, 'Missing provider');
   }
 
   async initialize () {
-    const PlayerKlass = this.#playerKlass;
+    const PlayerKlass = this.#getPlayerKlass();
 
     this.#player = new PlayerKlass(this.#containerElem, {
       url: this.#opt.mediaUrl,
@@ -56,18 +59,24 @@ export default class ExAudioDescriptionPlayer {
 
     await this.#describer.fetchAndParse(this.#opt.trackUrl);
 
-    this.#player.on('timeupdate', (ev) => this.#describer.onTimeupdateEvent(ev, this.#opt.isEnabledCallback()));
+    this.#player.on('timeupdate', (ev) => this.#describer.onTimeupdateEvent(ev, this.#isEnabledFN()));
     this.#player.on('play', (ev) => console.debug('Play video:', this.#player.element.title, ev));
-    this.#player.on('error', (ev) => console.error('Vimeo Error:', ev));
+    this.#player.on('error', (ev) => console.error('Player Error:', ev));
 
     await this.#player.ready();
+    // this.#player.element.setAttribute('part', 'iframe');
 
-    console.debug('SEAD player ready:', this);
+    // console.debug('SEAD player ready:', this);
   }
 
-  #onMetadata (entry, ev) {
+  #onMetadata (entry, event) {
     console.assert(entry && entry.meta, 'Missing meta');
-    const { meta } = entry;
+    const { meta, from } = entry;
+
+    if (from === this.#lastFromTime) {
+      console.debug('onMeta repeat:', entry);
+      return;
+    }
 
     if (meta.pauseMedia) {
       if (this.#pauseID) {
@@ -77,16 +86,19 @@ export default class ExAudioDescriptionPlayer {
           this.#containerElem.dataset.extPause = false;
 
           this.#player.play();
-          console.debug('Resume player');
+          this.#opt.onStateChange({ state: 'play', entry, event });
         });
 
         this.#player.pause();
-        console.debug('Pause player');
+        // console.debug('>> PAUSE:', this.#milliseconds(meta));
+        this.#opt.onStateChange({ state: 'pause', entry, event });
 
         this.#containerElem.dataset.extPause = true;
       }
     }
-    console.debug('>> onMetadata:', meta, ev);
+    this.#lastFromTime = from;
+
+    console.debug('onMetadata:', meta, event);
   }
 
   #setTimeout (meta, callbackFN) {

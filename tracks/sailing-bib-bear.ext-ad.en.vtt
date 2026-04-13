@@ -7,38 +7,38 @@ https://vimeo.com/1006361470
 Duration: 01:39.
 
 
-0
-00:00:00.000 --> 00:00:01.000
+SA EAD 0
+00:00:00.000 --> 00:00:00.600
 {
   "justA": "test"
 }
 
-1
+SA EAD 1
 00:00:01.000 --> 00:00:04.000
 Sailing Bib Bear. Your dreams. Our sails.
 
-2
+SA EAD 2
 00:00:06.500 --> 00:00:09.000
 Aerial shots of a sailing yacht heeling in the breeze.
 
-3
+SA EAD 3
 00:00:11.500 --> 00:00:13.000
 Under a blue sky.
 
-4
+SA EAD 4
 00:00:16.000 --> 00:00:17.000
 This is extended audio description!
 
-5
+SA EAD 5
 00:00:18.000 --> 00:00:18.400
 Now the yacht is sailing down wind, parallel with the shore.
 
-6
-00:00:18.500 --> 00:00:19.000
+SA EAD 6
+00:00:18.600 --> 00:00:19.100
 {
   "pauseMedia": 3000
 }
 
-7
-00:00:22.500 --> 00:00:23.000
+SA EAD 7
+00:00:21.000 --> 00:00:22.000
 End of extended audio description.

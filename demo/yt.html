@@ -7,19 +7,18 @@
 
 <title> Synthetic & Extended Audio Description </title>
 
-<h1> Synthetic & Extended Audio Description — Demo </h1>
+<h1> SEAD — YouTube Demo </h1>
 
 <main>
+<p role="alert"></p>
 
 <p><voice-select locale="en-(gb|ie|au)"></voice-select></p>
 
 <sead-player
-  data-media-url="https://vimeo.com/1006361470"
-  data-track-url="../tracks/sailing-bib-bear.ext-ad.en.vtt"
-  data-provider="vimeo"
->
-  <a href="https://vimeo.com/1006361470">Demo video</a>
-</sead-player>
+  data-media-url="-"
+  data-track-url="-"
+  data-provider="-"
+></sead-player>
 
 </main>
 
@@ -33,25 +32,37 @@
   "imports": {
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
     "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js",
-    "index": "../index.js"
+    "app": "../src/util/app.js"
   }
 }
 </script>
 
 
 <script type="module">
-  import { AudioDescribeElement, VoiceSelectElement } from 'index';
+  import queryApp from 'app';
 
-  customElements.define('sead-player', AudioDescribeElement);
-  customElements.define('voice-select', VoiceSelectElement);
+  queryApp();
 </script>
 
 
 <script type="XX_module">
-  import { demoApp } from 'app';
+  import YTPlayer from '../src/util/YoutubePlayer.js';
 
-  // https://vimeo.com/creativecommons/cc0
-  demoApp();
+  const ELEM = document.querySelector('#player');
+
+  runPlayer();
+
+  async function runPlayer () {
+    const player = new YTPlayer(ELEM, {
+      url: 'https://youtu.be/M7lc1UVf-VE',
+      // videoId: 'M7lc1UVf-VE'
+    });
+
+    player.on('timeupdate', (ev) => console.debug('timeupdate:', ev));
+
+    await player.ready();
+    console.debug('Ready!!');
+  }
 </script>
 
 </html>

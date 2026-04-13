@@ -1,12 +1,14 @@
 import SEADPlayer from './src/ExAudioDescriptionPlayer.js';
 import SynthAudioDescriber from './src/SynthAudioDescriber.js';
 import MetaVttParser from './src/MetaVttParser.js';
+import YoutubePlayer from './src/util/YoutubePlayer.js';
 import AudioDescribeElement from './src/util/AudioDescribeElement.js';
 import VoiceSelectElement from './src/util/VoiceSelectElement.js';
 
 const { customElements } = globalThis;
 
-/**
+/** Legacy app.
+ *
  * @copyright Nick Freear, 10-April-2026.
  */
 async function demoApp () {
@@ -28,7 +30,8 @@ async function demoApp () {
 }
 
 export {
-  demoApp, MetaVttParser, SynthAudioDescriber, AudioDescribeElement, VoiceSelectElement, SEADPlayer
+  demoApp, MetaVttParser, SynthAudioDescriber, YoutubePlayer,
+  AudioDescribeElement, VoiceSelectElement, SEADPlayer
 };
 
 export default SEADPlayer;

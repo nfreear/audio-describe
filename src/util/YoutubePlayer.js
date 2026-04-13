@@ -10,8 +10,9 @@ export default class YoutubePlayer {
   #player;
   #isReady = false;
   #opt;
-
   #listeners = [];
+
+  get element () { return this.#player.g; } /** @TODO fragile? */
 
   on (event, handler) {
     console.assert(typeof handler === 'function', 'Expected function');
@@ -57,8 +58,8 @@ export default class YoutubePlayer {
     window.onYouTubeIframeAPIReady = () => {
       const { YT } = window;
       this.#player = new YT.Player(playerElem, {
-        height: 360,
-        width: 640,
+        height: this.#opt.height ?? 360,
+        width: this.#opt.width ?? 640,
         videoId: this.#videoId, // 'M7lc1UVf-VE',
         playerVars: {
           playsinline: 1

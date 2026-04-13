@@ -2,6 +2,10 @@ import SEADPlayer from '../ExAudioDescriptionPlayer.js';
 
 const { HTMLElement } = globalThis;
 
+/**
+ * Custom element wrapper around SEADPlayer.
+ * @customElement sead-player
+ */
 export default class AudioDescribeElement extends HTMLElement {
   #seadPlayer;
 
@@ -12,6 +16,8 @@ export default class AudioDescribeElement extends HTMLElement {
   get #doNotTrack () { return this.hasAttribute('dnt'); }
   get #label () { return this.getAttribute('label') ?? 'Audio description'; }
 
+  get #iframeElem () { return this.shadowRoot.querySelector('iframe'); }
+
   async connectedCallback () {
     const root = this.attachShadow({ mode: 'open' });
     const { label, checkbox, container } = this.#createElements();
@@ -21,6 +27,7 @@ export default class AudioDescribeElement extends HTMLElement {
 
     this.#seadPlayer = new SEADPlayer(container, {
       isEnabledCallback: () => checkbox.checked, // Evaluate each time "timeupdate" event is fired.
+      onStateChange: (ev) => this.#onStateChange(ev),
       provider: this.#provider,
       mediaUrl: this.#mediaUrl,
       trackUrl: this.#trackUrl,
@@ -29,6 +36,8 @@ export default class AudioDescribeElement extends HTMLElement {
     });
 
     await this.#seadPlayer.initialize();
+
+    this.#iframeElem.setAttribute('part', 'iframe');
 
     console.debug('sead-player:', [this]);
   }
@@ -50,5 +59,11 @@ export default class AudioDescribeElement extends HTMLElement {
     label.appendChild(span);
 
     return { label, checkbox, container };
+  }
+
+  #onStateChange (ev) {
+    const { state } = ev;
+    this.dataset.extState = state;
+    console.debug('>> onStateChange ~ ext AD:', state, ev);
   }
 }

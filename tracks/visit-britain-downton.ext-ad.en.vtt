@@ -1,0 +1,34 @@
+WEBVTT
+
+NOTE
+Extended Audio Description demo.
+Title: "Christmas at …""
+https://youtu.be/HgHj3g68Tr4
+Duration: 01:39
+
+
+VB EAD 0
+00:00:00.000 --> 00:00:00.600
+{
+  "justA": "test"
+}
+
+VB EAD 1
+00:00:08.000 --> 00:00:08.400
+We move from the elaborate tutu tree to a sweeping exterior shot of Harewood House.
+
+VB EAD 2
+00:00:08.500 --> 00:00:09.100
+{
+  "pauseMedia": 6000
+}
+
+VB EAD 3
+00:00:24.000 --> 00:00:24.400
+The camera pans to colourful tree decorations, wreaths and a lavish table spread.
+
+VB EAD 4
+00:00:24.500 --> 00:00:25.100
+{
+  "pauseMedia": 6000
+}

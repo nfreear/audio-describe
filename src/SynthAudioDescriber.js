@@ -45,7 +45,7 @@ export default class SynthAudioDescriber {
         console.error('Unexpected entry:', entry);
       }
     }
-    console.debug('timeupdate:', describe, entry, ev);
+    // console.debug('timeupdate:', describe, entry, ev);
   }
 
   #speakOnce (text) {
