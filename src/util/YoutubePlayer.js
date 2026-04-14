@@ -22,7 +22,7 @@ export default class YoutubePlayer {
 
   #callListener (eventName, eventPayload) {
     const found = this.#listeners.find((it) => it.event === eventName);
-    console.assert(found, 'Listener not found');
+    console.assert(found, `Listener not found: ${eventName}`);
     if (found) {
       found.handler(eventPayload);
     }

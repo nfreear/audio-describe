@@ -3,7 +3,7 @@ import YoutubePlayer from './util/YoutubePlayer.js';
 import SynthAudioDescriber from './SynthAudioDescriber.js';
 
 /**
- * Synthetic & Extended Audio Description (SEAD).
+ * Synthesised & Extended Audio Description (SEAD).
  *
  * @copyright Nick Freear, 10-April-2026.
  */

@@ -1,7 +1,7 @@
 
 [![Deploy][ci-badge]][ci]
 
-# Synthetic & Extended Audio Description (SEAD)
+# Synthesised & Extended Audio Description (SEAD)
 
 __Experimental__: I have not (_yet_) researched how acceptable synthesised speech is to end-users for audio description on the Web.
 
