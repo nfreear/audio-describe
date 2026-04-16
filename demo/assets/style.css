@@ -6,7 +6,6 @@ sead-player {
   margin: 2rem 0;
   min-height: 300px;
 
-  &[ X_data-ext-pause = true ],
   &[ data-ext-state = pause ] {
     outline: 3px solid darkorange;
   }
@@ -21,6 +20,25 @@ sead-player {
 
   &::part(iframe) {
     border-radius: .2rem;
+  }
+}
+
+voice-select {
+  border-radius: 1px;
+  display: inline-block;
+  min-height: 1rem;
+  min-width: 1rem;
+
+  &[ data-state = no-support ] {
+    outline: 3px dotted darkorange;
+  }
+
+  &[ data-state = no-voices ] {
+    outline: 2px solid red;
+  }
+
+  &[ data-ready ] {
+    outline: 1px dotted darkgreen;
   }
 }
 

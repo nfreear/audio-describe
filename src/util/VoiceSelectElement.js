@@ -13,6 +13,7 @@ const { HTMLElement, speechSynthesis, SpeechSynthesisUtterance } = globalThis;
 export default class VoiceSelectElement extends HTMLElement {
   #eventName = 'voice-select';
   #eventTarget = window;
+  #timeoutMS = 2000;
   #voices;
   #filtered;
   #selectedVoice;
@@ -23,7 +24,15 @@ export default class VoiceSelectElement extends HTMLElement {
 
   get #label () { return this.getAttribute('label') ?? 'Voice '; }
 
+  get #voiceCount () { return this.#filtered.length; }
+  get value () { return this.#selectedVoice; }
+
   connectedCallback () {
+    if (!this.#speechSynthesisSupported) {
+      this.dataset.state = 'no-support';
+      return;
+    }
+
     const root = this.attachShadow({ mode: 'open' });
     const { label, select, button } = this.#createElements();
 
@@ -41,8 +50,17 @@ export default class VoiceSelectElement extends HTMLElement {
       speechSynthesis.onvoiceschanged !== undefined
     ) {
       speechSynthesis.onvoiceschanged = () => this.#populateVoiceList(select);
+      console.debug('voice-select:', [this]);
     }
-    console.debug('voice-select:', [this]);
+    this.#timeoutStatusCheck();
+  }
+
+  #timeoutStatusCheck () {
+    setTimeout(() => {
+      if (!this.#voiceCount) {
+        this.dataset.state = 'no-voices';
+      }
+    }, this.#timeoutMS);
   }
 
   #createElements () {
@@ -78,7 +96,7 @@ export default class VoiceSelectElement extends HTMLElement {
 
   #dispatchEvent (voice, value, originalEvent) {
     const event = new CustomEvent(this.#eventName, {
-      detail: { voice, value, originalEvent }
+      detail: { voice, value, originalEvent, source: this }
     });
     this.#eventTarget.dispatchEvent(event);
     // console.debug('Dispatched:', voice, event);
@@ -87,7 +105,7 @@ export default class VoiceSelectElement extends HTMLElement {
   #populateVoiceList (selectElem) {
     if (!this.#speechSynthesisSupported) {
       console.warn('speechSynthesis is not supported!');
-      this.dataset.error = 'no-support';
+      this.dataset.state = 'no-support';
       return;
     }
 
@@ -110,8 +128,10 @@ export default class VoiceSelectElement extends HTMLElement {
       selectElem.appendChild(option);
     }
 
-    if (this.#filtered.length) {
+    if (this.#voiceCount) {
       this.dataset.ready = true;
+      this.dataset.count = this.#voiceCount;
+      this.title = `${this.#voiceCount} voices`;
     }
   }
 
