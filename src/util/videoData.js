@@ -3,19 +3,19 @@
  */
 const DATA = [
   {
-    id: 'vbde2',
+    id: 'yt:vbde2',
     title: 'Christmas at …',
     rights: '© All rights reserved.',
     mediaUrl: 'https://youtu.be/HgHj3g68Tr4',
     trackUrl: '../tracks/visit-britain-downton-v2.ext-ad.en.vtt',
     provider: 'youtube'
   }, {
-    id: 'vbdex',
+    id: 'yt:vbdex',
     mediaUrl: 'https://youtu.be/HgHj3g68Tr4',
     trackUrl: '../tracks/visit-britain-downton.ext-ad.en.vtt',
     provider: 'youtube'
   }, {
-    id: 'uncrpd1',
+    id: 'yt:uncrpd1',
     title: 'Committee on the Rights of Persons with Disabilities (CRPD), by UN Human Rights',
     rights: 'License: CC:BY',
     mediaUrl: 'https://youtu.be/dX2zmMSLkj4',

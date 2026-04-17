@@ -23,6 +23,7 @@ export default class VoiceSelectElement extends HTMLElement {
   get #locale () { return this.getAttribute('locale') ?? 'en'; }
 
   get #label () { return this.getAttribute('label') ?? 'Voice '; }
+  get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test speech'; }
 
   get #voiceCount () { return this.#filtered.length; }
   get value () { return this.#selectedVoice; }
@@ -71,7 +72,7 @@ export default class VoiceSelectElement extends HTMLElement {
     label.setAttribute('for', 'select');
     select.id = 'select';
     label.textContent = this.#label;
-    button.textContent = 'Test';
+    button.textContent = this.#buttonLabel;
 
     label.setAttribute('part', 'label');
     select.setAttribute('part', 'select');
