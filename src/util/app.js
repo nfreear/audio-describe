@@ -1,5 +1,5 @@
 import { AudioDescribeElement, VoiceSelectElement } from '../../index.js';
-import findVideo from './videoData.js';
+import videoData from './videoData.js';
 
 const { customElements, HTMLElement, location } = globalThis;
 
@@ -9,6 +9,10 @@ const { customElements, HTMLElement, location } = globalThis;
  * @copyright Nick Freear, 12-April-2026.
  */
 export default class DemoAppElement extends HTMLElement {
+  #videoData;
+  #result;
+
+  get #vendorVtt () { return this.hasAttribute('vendor-vtt'); }
   get #mediaChrome () { return this.hasAttribute('media-chrome'); }
   get #mediaSelector () { return this.getAttribute('media-selector') ?? 'video'; }
   get #defaultId () { return this.getAttribute('default-id') ?? 'default'; }
@@ -20,14 +24,13 @@ export default class DemoAppElement extends HTMLElement {
   get #alertElement () { return this.querySelector('[ role = alert ]'); }
   get #trackElement () { return this.querySelector('track[ kind = descriptions ]'); }
   get #mediaElement () { return this.querySelector(this.#mediaSelector); }
-  get #data () { return findVideo(this.#query); }
 
   #expectations () {
     console.assert(this.#query, 'Missing query');
     console.assert(this.#alertElement, 'Missing alert element');
     console.assert(this.#trackElement, 'Missing track element');
     console.assert(this.#mediaElement, 'Missing media element');
-    console.assert(this.#data, 'Missing media entry');
+    console.assert(this.#result, 'Missing media entry');
   }
 
   #handleNotFoundError () {
@@ -45,13 +48,14 @@ export default class DemoAppElement extends HTMLElement {
   }
 
   async connectedCallback () {
-    if (!this.#data) {
+    await this.#importFindVideo();
+    if (!this.#result) {
       return this.#handleNotFoundError();
     }
     this.#expectations();
 
-    this.#trackElement.src = this.#data.trackUrl;
-    this.#mediaElement.setAttribute('src', this.#data.mediaUrl);
+    this.#trackElement.src = this.#result.trackUrl;
+    this.#mediaElement.setAttribute('src', this.#result.mediaUrl);
 
     customElements.define('voice-select', VoiceSelectElement);
 
@@ -60,5 +64,16 @@ export default class DemoAppElement extends HTMLElement {
     customElements.define('audio-describe-controller', AudioDescribeElement);
 
     console.debug('demo-app:', [this]);
+  }
+
+  async #importFindVideo () {
+    let allData = videoData;
+    if (this.#vendorVtt) {
+      const { default: vendorData } = await import('vtt-data');
+      allData = [...vendorData, ...videoData];
+    }
+    this.#videoData = allData;
+    this.#result = this.#videoData.find((it) => it.id === this.#query);
+    return this.#result;
   }
 }
