@@ -12,7 +12,7 @@ import AudioDescribeElement from './src/util/AudioDescribeElement.js';
 import VoiceSelectElement from './src/util/VoiceSelectElement.js';
 
 export {
-  demoApp, MetaVttParser, SynthAudioDescriber,
+  MetaVttParser, SynthAudioDescriber,
   AudioDescribeElement, VoiceSelectElement, SEADController
 };
 
