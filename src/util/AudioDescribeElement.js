@@ -4,7 +4,7 @@ const { HTMLElement } = globalThis;
 
 /**
  * Custom element wrapper around SEADController.
- * @customElement sead-controller ?
+ * @customElement audio-describe-controller
  */
 export default class AudioDescribeControllerElement extends HTMLElement {
   #defaultSelector = 'video, audio, [src *= "vimeo.com"], [src *= "youtube.com"]';

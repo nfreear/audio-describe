@@ -6,6 +6,7 @@ const { customElements, HTMLElement, location } = globalThis;
 /**
  * Demo app, optionally using a URL query parameter.
  *
+ * @customElement demo-app
  * @copyright Nick Freear, 12-April-2026.
  */
 export default class DemoAppElement extends HTMLElement {

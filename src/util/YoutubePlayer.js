@@ -1,4 +1,5 @@
 /**
+ * @DEPRECATED
  * YoutubePlayer class that is compatible with Vimeo's Player interface.
  *
  * @see https://developers.google.com/youtube/iframe_api_reference

@@ -20,6 +20,12 @@ The proposed solution combines:
 * [WebVTT files containing JSON metadata][vtt:meta]
 * [Speech Synthesis Web API][mdn:synth] ([widely supported][can-i:synth])
 
+## Documentation
+
+> Work-In-Progress!
+
+* [WebVTT extension, for Synthesised & Extended Audio Description][doc:vtt-ext]
+
 ## WebVTT
 
 An example of [WebVTT][vtt:meta] containing extended audio description and metadata:
@@ -47,6 +53,13 @@ Now the yacht is sailing down wind, parallel with the shore.
 00:00:21.000 --> 00:00:22.000
 End of extended audio description.
 ```
+
+## License
+
+* License: [MIT][]
+
+[mit]: https://github.com/nfreear/audio-describe/blob/main/LICENSE
+[doc:vtt-ext]: https://github.com/nfreear/audio-describe/blob/main/docs/WEBVTT-EXT.md
 
 [wai:av-plan]: https://www.w3.org/WAI/media/av/planning/
 [wcag:ead]: https://www.w3.org/TR/WCAG22/#extended-audio-description-prerecorded
