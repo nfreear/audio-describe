@@ -26,10 +26,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
 
   get #srclang () { return this.getAttribute('srclang') ?? 'en'; }
 
-  get #doNotTrack () { return this.hasAttribute('dnt'); }
+  // Was: get #doNotTrack () { return this.hasAttribute('dnt'); }
   get #label () { return this.getAttribute('label') ?? 'Audio description'; }
-
-  // get #iframeElem () { return this.shadowRoot.querySelector('iframe'); }
 
   #expectations () {
     console.assert(this.#mediaElement, 'Expecting a video, audio, vimeo-video, youtube-video element (or similar)');

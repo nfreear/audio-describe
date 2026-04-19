@@ -53,7 +53,6 @@
 <script type="importmap">
 {
   "imports": {
-    "vimeo-video-element": "https://cdn.jsdelivr.net/npm/vimeo-video-element@1.1/+esm",
     "youtube-video-element": "https://cdn.jsdelivr.net/npm/youtube-video-element@1.1/+esm",
     "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
@@ -62,16 +61,6 @@
     "app": "../src/util/app.js"
   }
 }
-</script>
-
-
-<script type="XX__module">
-  import 'youtube-video-element';
-  import 'media-chrome';
-  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
-
-  customElements.define('audio-describe-controller', AudioDescribeElement);
-  customElements.define('voice-select', VoiceSelectElement);
 </script>
 
 

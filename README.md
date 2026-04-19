@@ -25,6 +25,7 @@ The proposed solution combines:
 > Work-In-Progress!
 
 * [WebVTT extension, for Synthesised & Extended Audio Description][doc:vtt-ext]
+* [API][doc:api]
 
 ## WebVTT
 
@@ -60,6 +61,7 @@ End of extended audio description.
 
 [mit]: https://github.com/nfreear/audio-describe/blob/main/LICENSE
 [doc:vtt-ext]: https://github.com/nfreear/audio-describe/blob/main/docs/WEBVTT-EXT.md
+[doc:api]: https://github.com/nfreear/audio-describe/blob/main/docs/API.md
 
 [wai:av-plan]: https://www.w3.org/WAI/media/av/planning/
 [wcag:ead]: https://www.w3.org/TR/WCAG22/#extended-audio-description-prerecorded
