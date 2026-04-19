@@ -1,75 +1,68 @@
-import VimeoPlayer from '@vimeo/player';
-import YoutubePlayer from './util/YoutubePlayer.js';
 import SynthAudioDescriber from './SynthAudioDescriber.js';
+
+const { HTMLElement } = globalThis;
 
 /**
  * Synthesised & Extended Audio Description (SEAD).
  *
  * @copyright Nick Freear, 10-April-2026.
  */
-export default class ExAudioDescriptionPlayer {
-  #containerElem;
+export default class ExAudioDescriptionController {
   #opt = {};
-  #player;
   #describer;
   #pauseID;
   #lastFromTime;
 
+  get #mediaEl () { return this.#opt.mediaElement; }
   get #isEnabledFN () { return this.#opt.isEnabledCallback; }
 
-  #getPlayerKlass () {
-    const { provider } = this.#opt;
-    console.assert(/^(vimeo|youtube)/.test(provider), `Unexpected provider: ${provider}`);
-    const providers = {
-      vimeo: VimeoPlayer,
-      youtube: YoutubePlayer
-    };
-    return providers[provider];
-  }
-
-  // TODO: get element () { return this.#player.element; }
-
-  constructor (containerElement, options) {
-    this.#containerElem = containerElement;
+  constructor (options) {
     this.#opt = options;
 
-    this.#assertTests();
+    this.#expectations();
   }
 
-  #assertTests () {
-    console.assert(this.#containerElem, 'Missing container element');
+  #expectations () {
+    console.assert(this.#mediaEl instanceof HTMLElement, 'mediaElement should extend HTMLElement');
+    console.assert(typeof this.#mediaEl.addEventListener === 'function', 'Missing addEventListener'); // Superfluous?
+    console.assert(typeof this.#mediaEl.play === 'function', 'Missing play method');
+    console.assert(typeof this.#mediaEl.pause === 'function', 'Missing pause method');
+    console.assert(typeof this.#mediaEl.currentTime === 'number', 'Missing currentTime property (getter)');
     console.assert(typeof this.#isEnabledFN === 'function', 'Missing isEnabledCallback');
     console.assert(typeof this.#opt.onStateChange === 'function', 'Missing onStateChange function');
-    console.assert(this.#opt.mediaUrl, 'Missing mediaUrl');
     console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)');
-    console.assert(this.#opt.provider, 'Missing provider');
+    // console.assert(this.#opt.provider, 'Missing provider'); // Redundant?
   }
 
   async initialize () {
-    const PlayerKlass = this.#getPlayerKlass();
-
-    this.#player = new PlayerKlass(this.#containerElem, {
-      url: this.#opt.mediaUrl,
-      width: this.#opt.width ?? 640,
-      dnt: this.#opt.dnt ?? false
-    });
-
     this.#describer = new SynthAudioDescriber();
     this.#describer.onMetadata = (entry, ev) => this.#onMetadata(entry, ev);
 
     await this.#describer.fetchAndParse(this.#opt.trackUrl);
 
-    this.#player.on('timeupdate', (ev) => this.#describer.onTimeupdateEvent(ev, this.#isEnabledFN()));
-    this.#player.on('play', (ev) => console.debug('Play video:', this.#player.element.title, ev));
-    this.#player.on('error', (ev) => console.error('Player Error:', ev));
+    this.#mediaEl.addEventListener('timeupdate', (ev) => this.#onTimeupdateEvent(ev));
+    this.#mediaEl.addEventListener('play', (ev) => console.debug('Play:', ev));
+    this.#mediaEl.addEventListener('pause', (ev) => console.debug('Pause:', ev));
+    this.#mediaEl.addEventListener('error', (ev) => console.error('Media Error:', ev));
 
-    await this.#player.ready();
-    // this.#player.element.setAttribute('part', 'iframe');
+    if (typeof this.#mediaEl.ready === 'function') {
+      await this.#mediaEl.ready();
+    }
 
     // console.debug('SEAD player ready:', this);
   }
 
+  /**
+   * https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
+   */
+  #onTimeupdateEvent (ev) {
+    const seconds = this.#mediaEl.currentTime;
+    this.#describer.onTimeupdateEvent(ev, seconds, this.#isEnabledFN());
+  }
+
   #onMetadata (entry, event) {
+    console.debug('onMetaData:', entry, event);
+
     console.assert(entry && entry.meta, 'Missing meta');
     const { meta, from } = entry;
 
@@ -83,17 +76,17 @@ export default class ExAudioDescriptionPlayer {
         console.debug('Already paused:', this.#pauseID);
       } else {
         this.#setTimeout(meta, () => {
-          this.#containerElem.dataset.extPause = false;
+          // this.#containerElem.dataset.extPause = false;
 
-          this.#player.play();
+          this.#mediaEl.play();
           this.#opt.onStateChange({ state: 'play', entry, event });
         });
 
-        this.#player.pause();
+        this.#mediaEl.pause();
         // console.debug('>> PAUSE:', this.#milliseconds(meta));
         this.#opt.onStateChange({ state: 'pause', entry, event });
 
-        this.#containerElem.dataset.extPause = true;
+        // this.#containerElem.dataset.extPause = true;
       }
     }
     this.#lastFromTime = from;
@@ -116,5 +109,6 @@ export default class ExAudioDescriptionPlayer {
     return pauseMS;
   }
 
+  // Legacy?
   speak (text) { return this.#describer.speak(text); }
 }

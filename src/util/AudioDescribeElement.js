@@ -1,52 +1,73 @@
-import SEADPlayer from '../ExAudioDescriptionPlayer.js';
+import SEADController from '../ExAudioDescriptionPlayer.js';
 
 const { HTMLElement } = globalThis;
 
 /**
- * Custom element wrapper around SEADPlayer.
- * @customElement sead-player
+ * Custom element wrapper around SEADController.
+ * @customElement sead-controller ?
  */
-export default class AudioDescribeElement extends HTMLElement {
-  #seadPlayer;
+export default class AudioDescribeControllerElement extends HTMLElement {
+  #defaultSelector = 'video, audio, [src *= "vimeo.com"], [src *= "youtube.com"]';
+  #seadController;
 
-  get #mediaUrl () { return this.dataset.mediaUrl; } // 'https://vimeo.com/1006361470',
-  get #trackUrl () { return this.dataset.trackUrl; }
-  get #provider () { return this.dataset.provider; }
+  get #mediaSelector () { return this.getAttribute('media-selector') ?? this.#defaultSelector; }
+
+  get #mediaElement () { // 'https://vimeo.com/1006361470'
+    return this.querySelector(this.#mediaSelector);
+  }
+
+  get #descriptionTracks () {
+    return this.querySelectorAll('track[ kind = descriptions ][ src ]');
+  }
+
+  get #descriptionTrack () {
+    return [...this.#descriptionTracks].find(it => it.srclang === this.#srclang);
+  }
+
+  get #srclang () { return this.getAttribute('srclang') ?? 'en'; }
 
   get #doNotTrack () { return this.hasAttribute('dnt'); }
   get #label () { return this.getAttribute('label') ?? 'Audio description'; }
 
-  get #iframeElem () { return this.shadowRoot.querySelector('iframe'); }
+  // get #iframeElem () { return this.shadowRoot.querySelector('iframe'); }
+
+  #expectations () {
+    console.assert(this.#mediaElement, 'Expecting a video, audio, vimeo-video, youtube-video element (or similar)');
+    console.assert(this.#descriptionTrack, 'Expecting at least one <track> element with kind="descriptions"');
+  }
 
   async connectedCallback () {
+    this.#expectations();
+
     const root = this.attachShadow({ mode: 'open' });
-    const { label, checkbox, container } = this.#createElements();
+    const { slot, label, checkbox } = this.#createElements();
 
     root.appendChild(label);
-    root.appendChild(container);
+    root.appendChild(slot);
+    // root.appendChild(container);
 
-    this.#seadPlayer = new SEADPlayer(container, {
+    // console.debug('src:', this.#descriptionTrack.src)
+
+    this.#seadController = new SEADController({
       isEnabledCallback: () => checkbox.checked, // Evaluate each time "timeupdate" event is fired.
       onStateChange: (ev) => this.#onStateChange(ev),
-      provider: this.#provider,
-      mediaUrl: this.#mediaUrl,
-      trackUrl: this.#trackUrl,
-      width: 640,
-      dnt: this.#doNotTrack
+      mediaElement: this.#mediaElement,
+      trackUrl: this.#descriptionTrack.src
     });
 
-    await this.#seadPlayer.initialize();
+    await this.#seadController.initialize();
 
-    this.#iframeElem.setAttribute('part', 'iframe');
+    // this.#iframeElem.setAttribute('part', 'iframe');
 
-    console.debug('sead-player:', [this]);
+    console.debug('sead-controller (V2):', [this]);
   }
 
   #createElements () {
+    const slot = document.createElement('slot');
     const label = document.createElement('label');
     const span = document.createElement('span');
     const checkbox = document.createElement('input');
-    const container = document.createElement('div');
+    // const container = document.createElement('div');
 
     span.textContent = this.#label;
     checkbox.type = 'checkbox';
@@ -58,7 +79,7 @@ export default class AudioDescribeElement extends HTMLElement {
     label.appendChild(checkbox);
     label.appendChild(span);
 
-    return { label, checkbox, container };
+    return { slot, label, checkbox };
   }
 
   #onStateChange (ev) {

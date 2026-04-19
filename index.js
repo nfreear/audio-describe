@@ -1,7 +1,7 @@
-import SEADPlayer from './src/ExAudioDescriptionPlayer.js';
+import SEADController from './src/ExAudioDescriptionPlayer.js';
 import SynthAudioDescriber from './src/SynthAudioDescriber.js';
 import MetaVttParser from './src/MetaVttParser.js';
-import YoutubePlayer from './src/util/YoutubePlayer.js';
+// import YoutubePlayer from './src/util/YoutubePlayer.js';
 import AudioDescribeElement from './src/util/AudioDescribeElement.js';
 import VoiceSelectElement from './src/util/VoiceSelectElement.js';
 
@@ -18,7 +18,7 @@ async function demoApp () {
   customElements.define('sead-player', AudioDescribeElement);
   customElements.define('voice-select', VoiceSelectElement);
 
-  const seadPlayer = new SEADPlayer(containerElem, {
+  const seadPlayer = new SEADController(containerElem, {
     describeCallback: () => audioDescribe.checked,
     mediaUrl: containerElem.dataset.mediaUrl, // 'https://vimeo.com/1006361470',
     trackUrl: containerElem.dataset.trackUrl,
@@ -30,8 +30,8 @@ async function demoApp () {
 }
 
 export {
-  demoApp, MetaVttParser, SynthAudioDescriber, YoutubePlayer,
-  AudioDescribeElement, VoiceSelectElement, SEADPlayer
+  demoApp, MetaVttParser, SynthAudioDescriber,
+  AudioDescribeElement, VoiceSelectElement, SEADController
 };
 
-export default SEADPlayer;
+export default SEADController;

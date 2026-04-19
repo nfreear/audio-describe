@@ -7,20 +7,41 @@
 
 <title> Synthesised & Extended Audio Description — YouTube Demo </title>
 
-<h1> Synthesised & Extended Audio Description — YouTube Demo </h1>
+<header>
+  <h1> Synthesised & Extended Audio Description — YouTube Demo </h1>
+</header>
 
 <main>
+
+<demo-app media-chrome media-selector="youtube-video" default-id="yt:uncrpd1">
+
 <p role="alert"></p>
 
-<p><voice-select locale="en-(gb|ie|au)"></voice-select></p>
+<p><voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select></p>
 
-<sead-player
-  data-media-url="-"
-  data-track-url="-"
-  data-provider="-"
->
-  Loading…
-</sead-player>
+<audio-describe-controller>
+  <media-controller>
+    <youtube-video
+      XX_src="https://www.youtube.com/watch?v=tO01J-M3g0U"
+      slot="media"
+      crossorigin
+      X_muted
+      X_controls
+    >
+      <track kind="descriptions" srclang="en" X__src="../tracks/sailing-bib-bear.ext-ad.en.vtt">
+      <p>Loading video…</p>
+      <a href="https://youtu.be/tO01J-M3g0U">Video on YouTube</a>
+    </youtube-video>
+    <media-control-bar>
+      <media-play-button></media-play-button>
+      <media-mute-button></media-mute-button>
+      <media-time-range></media-time-range>
+      <media-time-display showduration remaining></media-time-display>
+    </media-control-bar>
+  </media-controller>
+</audio-describe-controller>
+
+</demo-app>
 
 </main>
 
@@ -32,17 +53,30 @@
 <script type="importmap">
 {
   "imports": {
+    "vimeo-video-element": "https://cdn.jsdelivr.net/npm/vimeo-video-element@1.1/+esm",
+    "youtube-video-element": "https://cdn.jsdelivr.net/npm/youtube-video-element@1.1/+esm",
+    "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js"
+    "app": "../src/util/app.js"
   }
 }
 </script>
 
 
-<script type="module">
-  import queryApp from '../src/util/app.js';
+<script type="XX__module">
+  import 'youtube-video-element';
+  import 'media-chrome';
+  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
 
-  queryApp();
+  customElements.define('audio-describe-controller', AudioDescribeElement);
+  customElements.define('voice-select', VoiceSelectElement);
+</script>
+
+
+<script type="module">
+  import DemoAppElement from 'app';
+
+  customElements.define('demo-app', DemoAppElement);
 </script>
 
 </html>

@@ -31,12 +31,11 @@ export default class SynthAudioDescriber {
     console.debug('VTT entries:', entries);
   }
 
-  onTimeupdateEvent (ev, describe = true) {
-    // https://github.com/vimeo/player.js#timeupdate
-    const { seconds } = ev;
+  onTimeupdateEvent (ev, seconds, describeEnabled = true) {
+    console.assert(typeof seconds === 'number', 'Missing timeupdate seconds.');
 
     const entry = this.#parser.findByTime(seconds);
-    if (entry && describe) {
+    if (entry && describeEnabled) {
       if (entry.text) {
         this.#speakOnce(entry.text);
         // .
@@ -51,7 +50,7 @@ export default class SynthAudioDescriber {
         console.error('Unexpected entry:', entry);
       }
     }
-    // console.debug('timeupdate:', describe, entry, ev);
+    // console.debug('timeupdate:', describeEnabled, entry, ev);
   }
 
   #speakOnce (text) {

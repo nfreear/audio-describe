@@ -1,35 +1,64 @@
 import { AudioDescribeElement, VoiceSelectElement } from '../../index.js';
 import findVideo from './videoData.js';
 
-const { customElements, location } = globalThis;
+const { customElements, HTMLElement, location } = globalThis;
 
 /**
- * Demo app using a URL query parameter.
+ * Demo app, optionally using a URL query parameter.
  *
  * @copyright Nick Freear, 12-April-2026.
  */
-export default function queryApp () {
-  const playerElem = document.querySelector('sead-player');
-  const alertElem = document.querySelector('[ role = alert ]');
-  const params = new URLSearchParams(location.search);
-  const query = params.get('q') ?? 'default';
-
-  console.assert(playerElem, 'Missing sead-player element');
-
-  const found = findVideo(query);
-
-  if (found) {
-    playerElem.dataset.mediaUrl = found.mediaUrl;
-    playerElem.dataset.trackUrl = found.trackUrl;
-    playerElem.dataset.provider = found.provider;
-  } else {
-    document.documentElement.dataset.error = 'not-found';
-    alertElem.textContent = `Error. Video not found: ${query}`;
-    console.error('Error. Video not found:', query);
+export default class DemoAppElement extends HTMLElement {
+  get #mediaChrome () { return this.hasAttribute('media-chrome'); }
+  get #mediaSelector () { return this.getAttribute('media-selector') ?? 'video'; }
+  get #defaultId () { return this.getAttribute('default-id') ?? 'default'; }
+  get #query () {
+    const params = new URLSearchParams(location.search);
+    return params.get('q') ?? this.#defaultId;
   }
 
-  customElements.define('sead-player', AudioDescribeElement);
-  customElements.define('voice-select', VoiceSelectElement);
+  get #alertElement () { return this.querySelector('[ role = alert ]'); }
+  get #trackElement () { return this.querySelector('track[ kind = descriptions ]'); }
+  get #mediaElement () { return this.querySelector(this.#mediaSelector); }
+  get #data () { return findVideo(this.#query); }
 
-  console.debug('queryApp:', query);
+  #expectations () {
+    console.assert(this.#query, 'Missing query');
+    console.assert(this.#alertElement, 'Missing alert element');
+    console.assert(this.#trackElement, 'Missing track element');
+    console.assert(this.#mediaElement, 'Missing media element');
+    console.assert(this.#data, 'Missing media entry');
+  }
+
+  #handleNotFoundError () {
+    console.assert(this.#alertElement, 'Missing alert element');
+    document.documentElement.dataset.error = 'not-found';
+    this.#alertElement.textContent = `Error. Video not found: ${this.#query}`;
+    console.error('Error. Video not found:', this.#query);
+  }
+
+  async #importVendorLibs () {
+    await import(`${this.#mediaSelector}-element`);
+    if (this.#mediaChrome) {
+      await import('media-chrome');
+    }
+  }
+
+  async connectedCallback () {
+    if (!this.#data) {
+      return this.#handleNotFoundError();
+    }
+    this.#expectations();
+
+    this.#trackElement.src = this.#data.trackUrl;
+    this.#mediaElement.setAttribute('src', this.#data.mediaUrl);
+
+    customElements.define('voice-select', VoiceSelectElement);
+
+    await this.#importVendorLibs();
+
+    customElements.define('audio-describe-controller', AudioDescribeElement);
+
+    console.debug('demo-app:', [this]);
+  }
 }

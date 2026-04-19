@@ -7,20 +7,21 @@
 
 <title> Synthesised & Extended Audio Description (SEAD) </title>
 
-<h1> Synthesised & Extended Audio Description — Demo </h1>
+<header>
+  <h1> Synthesised & Extended Audio Description — Demo </h1>
+</header>
 
 <main>
 
-<p><voice-select locale="en-(gb|ie|au)"></voice-select></p>
+<p><voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select></p>
 
-<sead-player
-  data-media-url="https://vimeo.com/1006361470"
-  data-track-url="../tracks/sailing-bib-bear.ext-ad.en.vtt"
-  data-provider="vimeo"
->
-  Loading…
-  <a href="https://vimeo.com/1006361470">Demo video</a>
-</sead-player>
+<audio-describe-controller>
+  <vimeo-video src="https://vimeo.com/1006361470" crossorigin X_muted controls>
+    <track label="AD (extended)" kind="descriptions" default srclang="en" src="../tracks/sailing-bib-bear.ext-ad.en.vtt">
+    <p>Loading video…</p>
+    <a href="https://vimeo.com/1006361470">Demo video</a>
+  </vimeo-video>
+</audio-describe-controller>
 
 </main>
 
@@ -32,17 +33,19 @@
 <script type="importmap">
 {
   "imports": {
+    "vimeo-video-element": "https://cdn.jsdelivr.net/npm/vimeo-video-element@1.1/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "@vimeo/player": "https://unpkg.com/@vimeo/player@2.30.3/dist/player.es.js"
+    "audio-describe": "../index.js"
   }
 }
 </script>
 
 
 <script type="module">
-  import { AudioDescribeElement, VoiceSelectElement } from '../index.js';
+  import 'vimeo-video-element';
+  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
 
-  customElements.define('sead-player', AudioDescribeElement);
+  customElements.define('audio-describe-controller', AudioDescribeElement);
   customElements.define('voice-select', VoiceSelectElement);
 </script>
 
