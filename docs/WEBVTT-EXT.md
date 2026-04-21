@@ -21,7 +21,7 @@ However, on social media and the Web there are a number of challenges:
 
 As a result of the above, and a general lack of awareness, the vast majority of videos on the Web are not audio described, depriving end-users of an equivalent and accessible experience.
 
-The accepted way to overcome the lack of sufficient gaps in audio is [Extended Audio Description][wcag:u-ead], where the video is paused to allow a longer description to be uttered.
+The accepted way to overcome the lack of sufficient gaps in audio is [Extended Audio Description][wcag-u:ead], where the video is paused to allow a longer description to be uttered.
 
 And, people including a Working Group at the W3C have proposed [text video description][w3c:tvd], which would enable screen reader software to speak the Audio Description to the user. The drawbacks to this include:
 
@@ -36,6 +36,7 @@ For these reasons, it is proposed that the [Speech Synthesis][cg:tts] engine bui
 [WebVTT 1][] is a modern standard for the synchronisation, formatting and delivery of subtitles, captions and other textual data to accompany multimedia. It is published by the World Wide Web Consortium as a Candidate Recommendation in 2019.
 
 ←[Readme][]
+
 [Readme]: https://github.com/nfreear/audio-describe#readme
 
 [yt:ad]: https://support.google.com/youtube/answer/16166822

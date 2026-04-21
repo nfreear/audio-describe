@@ -5,6 +5,8 @@
 
 > Work-In-Progress!
 
+There are two main parts to the API: the `SEADController` core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
+
 ## Custom element example
 
 Below is an example of using the `<audio-describe-controller>` custom element:
@@ -32,52 +34,65 @@ Below is an example of using the `<audio-describe-controller>` custom element:
 
 ### Javascript
 
+JavaScript to import and register the custom element:
 ```js
 import { AudioDescribeElement } from 'audio-describe';
 
 customElements.define('audio-describe-controller', AudioDescribeElement);
 ```
 
-## `SEADController`
+## `SEADController` class
 
+The core `SEADController` JavaScript class constructor takes an `options` object as its only parameter. After calling the constructor, the `Promise<undefined> initialize()` method should be called.
 ```js
 import SEADController from 'audio-describe';
 
 const controller = new SEADController({
   mediaElement: document.querySelector('video'),
   trackUrl: 'path/to/ext-audio-description.en.vtt',
-  isEnabledCallback: () => { ...; return true; },
-  onStateChange: (ev) => { ... }
+  isEnabledCallback:  () => { …; return true; }, // Return true or false.
+  onStateChange: ({ state }) => { …; return undefined; }
 });
 
 await controller.initialize();
 ```
 
-### `mediaElement`
+The `options` object has the following properties:
+* `mediaElement` — `object` documented below.
+* `trackUrl` — Defines the audio description WebVtt file or resource that we wish to fetch. Accepts any of the types listed for [`fetch`][], including `string`, `URL` and `Request`.
+* `isEnabledCallback` — A function that has no arguments, and returns a `boolean` indicating whether audio description is enabled (for example, from the state of a checkbox). Evaluated before each call to the speech synthesis `speak` method.
+* `onStateChange` — A function that has a single `event` parameter, and an `undefined` return. The event contains a `state` property, which indicates whether the video is currently paused for Extended Audio Description, or playing.
 
-The `mediaElement` parameter is an instance of any class that extends [`HTMLElement`][HTMLElement], and supports the following:
+### `mediaElement` property
+
+The `mediaElement` property is an instance of any class that extends [`HTMLElement`][HTMLElement], and supports a subset of the [`HTMLMediaElement`][HTMLMediaElement] API, as follows:
 
 #### Methods
-* `addEventListener()`
-* [`pause()`][pause] — Pauses the video.
-* [`play()`][play] — Plays the video.
+* [`addEventListener()`][addEventListener] — Register an event handler.
+* [`Promise<undefined> play()`][play] — Play the video. Returns a `Promise`.
+* [`undefined pause()`][pause] — Pause the video.
 
 #### Properties
-* [`currentTime`][currentTime] — "A double-precision floating-point value indicating the current playback time in seconds;…"
+* [`double currentTime`][currentTime] — "A double-precision floating-point value indicating the current playback time in seconds;…" (often a _getter_)
 
 #### Events
-* [`timeupdate`][timeupdate] — "The current playback position changed as part of normal playback or…"
+* [`timeupdate`][timeupdate] — "The current playback position changed as part of normal playback or…" (dispatched on `this`).
 
-#### Examples of `mediaElement`
+#### Examples of supported `mediaElement`
 
-* [`<video>`][video] — The native HTML video element.
+* [`<video>`][video] — The native HTML5 video element.
 * [`<vimeo-video>`][vimeo-video] — "A custom element for the Vimeo player with an API that matches the `<video>` API."
 * [`<youtube-video>`][youtube-video] — "A custom element for the YouTube player with an API that matches the `<video>` API."
 * [`<videojs-video`][videojs-video] — _(Work-in-progress)_ "A custom element for Video.js with an API that matches the `<video>` API."
 
+Note, in theory any of the custom video elements listed in [muxinc/media-elements][] repository on GitHub should work (_thank you [Mux Inc][]!_). They have _not_ been tested, except for the ones listed above.
+
 ←[Readme][]
+
 [Readme]: https://github.com/nfreear/audio-describe#readme
 
+[mdn:fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch#resource
+[custom element]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 [EventTarget]: https://dom.spec.whatwg.org/#eventtarget
 [addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 [video]: https://html.spec.whatwg.org/multipage/media.html#the-video-element
@@ -88,8 +103,11 @@ The `mediaElement` parameter is an instance of any class that extends [`HTMLElem
 [mdn:HTMLMediaElement]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 [play]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
 [pause]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause
-[currentTime]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
+[currentTime]: https://html.spec.whatwg.org/multipage/media.html#dom-media-currenttime
+[mdn:currentTime]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
 [timeupdate]: https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
 [videojs-video]: https://www.media-chrome.org/docs/en/media-elements/videojs-video
 [vimeo-video]: https://www.media-chrome.org/docs/en/media-elements/vimeo-video
 [youtube-video]: https://www.media-chrome.org/docs/en/media-elements/youtube-video
+[mux Inc]: http://mux.com/
+[muxinc/media-elements]: https://github.com/muxinc/media-elements

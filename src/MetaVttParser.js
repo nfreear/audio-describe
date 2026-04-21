@@ -1,7 +1,5 @@
 import { parse } from '@plussub/srt-vtt-parser';
 
-const { fetch } = globalThis;
-
 /**
  * Fetch and parse a WebVTT file, optionally containing JSON meta-data.
  *
@@ -11,10 +9,13 @@ const { fetch } = globalThis;
  */
 export default class MetaVttParser {
   #entries;
+  #response;
 
   async fetchAndParse (resource, options) {
-    const response = await fetch(resource, options);
-    const rawVTT = await response.text();
+    const { fetch } = globalThis;
+
+    this.#response = await fetch(resource, options);
+    const rawVTT = await this.#response.text();
     // console.debug('Response:', response);
     return this.parse(rawVTT);
   }

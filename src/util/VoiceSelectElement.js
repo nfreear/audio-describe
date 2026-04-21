@@ -24,6 +24,7 @@ export default class VoiceSelectElement extends HTMLElement {
 
   get #label () { return this.getAttribute('label') ?? 'Voice '; }
   get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test speech'; }
+  get #testText () { return this.getAttribute('test-text') ?? 'Hello world!'; }
 
   get #voiceCount () { return this.#filtered.length; }
   get value () { return this.#selectedVoice; }
@@ -42,7 +43,7 @@ export default class VoiceSelectElement extends HTMLElement {
     root.appendChild(button);
 
     select.addEventListener('change', (ev) => this.#onChange(ev));
-    button.addEventListener('click', (ev) => this.#speak('Hello world!', ev));
+    button.addEventListener('click', (ev) => this.#speak(this.#testText, ev));
 
     this.#populateVoiceList(select);
 
@@ -100,7 +101,6 @@ export default class VoiceSelectElement extends HTMLElement {
       detail: { voice, value, originalEvent, source: this }
     });
     this.#eventTarget.dispatchEvent(event);
-    // console.debug('Dispatched:', voice, event);
   }
 
   #populateVoiceList (selectElem) {

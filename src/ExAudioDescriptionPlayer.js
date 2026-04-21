@@ -15,6 +15,7 @@ export default class ExAudioDescriptionController {
 
   get #mediaEl () { return this.#opt.mediaElement; }
   get #isEnabledFN () { return this.#opt.isEnabledCallback; }
+  get #onStateChangeFN () { return this.#opt.onStateChange; }
 
   constructor (options) {
     this.#opt = options;
@@ -22,6 +23,8 @@ export default class ExAudioDescriptionController {
     this.#expectations();
   }
 
+  /** Do a form of Duck typing via asserts.
+   */
   #expectations () {
     console.assert(this.#mediaEl instanceof HTMLElement, 'mediaElement should extend HTMLElement');
     console.assert(typeof this.#mediaEl.addEventListener === 'function', 'Missing addEventListener'); // Superfluous?
@@ -29,8 +32,8 @@ export default class ExAudioDescriptionController {
     console.assert(typeof this.#mediaEl.pause === 'function', 'Missing pause method');
     console.assert(typeof this.#mediaEl.currentTime === 'number', 'Missing currentTime property (getter)');
     console.assert(typeof this.#isEnabledFN === 'function', 'Missing isEnabledCallback');
-    console.assert(typeof this.#opt.onStateChange === 'function', 'Missing onStateChange function');
-    console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)');
+    console.assert(typeof this.#onStateChangeFN === 'function', 'Missing onStateChange function');
+    console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)'); // In theory 'trackUrl' can be anything accepted by `fetch()`
     // console.assert(this.#opt.provider, 'Missing provider'); // Redundant?
   }
 
@@ -45,11 +48,12 @@ export default class ExAudioDescriptionController {
     this.#mediaEl.addEventListener('pause', (ev) => console.debug('Pause:', ev));
     this.#mediaEl.addEventListener('error', (ev) => console.error('Media Error:', ev));
 
+    /** @LEGACY - Video.js */
     if (typeof this.#mediaEl.ready === 'function') {
       await this.#mediaEl.ready();
     }
 
-    // console.debug('SEAD player ready:', this);
+    // console.debug('SEAD controller ready:', this);
   }
 
   /**
@@ -61,8 +65,6 @@ export default class ExAudioDescriptionController {
   }
 
   #onMetadata (entry, event) {
-    console.debug('onMetaData:', entry, event);
-
     console.assert(entry && entry.meta, 'Missing meta');
     const { meta, from } = entry;
 
@@ -76,17 +78,12 @@ export default class ExAudioDescriptionController {
         console.debug('Already paused:', this.#pauseID);
       } else {
         this.#setTimeout(meta, () => {
-          // this.#containerElem.dataset.extPause = false;
-
           this.#mediaEl.play();
-          this.#opt.onStateChange({ state: 'play', entry, event });
+          this.#onStateChangeFN({ state: 'play', entry, event });
         });
 
         this.#mediaEl.pause();
-        // console.debug('>> PAUSE:', this.#milliseconds(meta));
-        this.#opt.onStateChange({ state: 'pause', entry, event });
-
-        // this.#containerElem.dataset.extPause = true;
+        this.#onStateChangeFN({ state: 'pause', entry, event });
       }
     }
     this.#lastFromTime = from;
