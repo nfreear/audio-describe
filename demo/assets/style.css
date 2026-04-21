@@ -58,9 +58,10 @@ voice-select {
 [ data-error ] {
   [ role = alert ] {
     background-color: #fee;
-    border: 1px solid darkred;
+    border: 2px solid red;
+    border-radius: .3rem;
     color: darkred;
-    font-size: large;
+    font-size: larger;
     padding: 1rem;
     margin: 2rem 0;
   }

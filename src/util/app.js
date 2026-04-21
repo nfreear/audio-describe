@@ -36,9 +36,10 @@ export default class DemoAppElement extends HTMLElement {
 
   #handleNotFoundError () {
     console.assert(this.#alertElement, 'Missing alert element');
+    console.error(`Error. Video not found: "${this.#query}"`);
+    this.dataset.error = 'not-found';
     document.documentElement.dataset.error = 'not-found';
-    this.#alertElement.textContent = `Error. Video not found: ${this.#query}`;
-    console.error('Error. Video not found:', this.#query);
+    this.#alertElement.textContent = `Error. Video not found: "${this.#query}"`;
   }
 
   async #importVendorLibs () {

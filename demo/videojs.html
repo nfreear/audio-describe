@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="assets/style.css">
+
+<title> Synthesised & Extended Audio Description — Video.js </title>
+
+<header>
+  <h1> Synthesised & Extended Audio Description — Video.js </h1>
+</header>
+
+<main>
+
+<demo-app vendor-vtt media-selector="videojs-video" default-id="mux:coffee">
+
+<p role="alert"></p>
+
+<p><voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select></p>
+
+<audio-describe-controller media-selector="videojs-video">
+  <media-controller>
+    <videojs-video
+      X_src="https://stream.mux.com/OfjbQ3esQifgboENTs4oDXslCP5sSnst/high.mp4"
+      X_src="https://www.youtube.com/watch?v=HgHj3g68Tr4"
+      crossorigin
+      controls >
+    <track kind="descriptions" srclang="en" X_src="../tracks/mux-pour-coffee.ext-ad.en.vtt">
+    <p>Loading video…</p>
+    </videojs-video>
+    <media-control-bar>
+      <media-play-button></media-play-button>
+      <media-mute-button></media-mute-button>
+      <media-time-range></media-time-range>
+      <media-time-display showduration remaining></media-time-display>
+    </media-control-bar>
+  </media-controller>
+</audio-describe-controller>
+
+</demo-app>
+
+</main>
+
+<footer>
+  <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
+</footer>
+
+
+<script type="importmap">
+{
+  "imports": {
+    "videojs-video-element": "https://cdn.jsdelivr.net/npm/videojs-video-element@1.2/+esm",
+    "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
+    "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
+    "esm.sh:audio-describe": "https://esm.sh/gh/nfreear/audio-describe",
+    "vtt-data": "https://nfreear.github.io/vtt-data/index.js",
+    "audio-describe": "../index.js",
+    "app": "../src/util/app.js"
+  }
+}
+</script>
+
+
+<script type="module">
+  import DemoAppElement from 'app';
+
+  customElements.define('demo-app', DemoAppElement);
+</script>
+
+<script type="X_module">
+  import 'videojs-video-element';
+  // import 'media-chrome';
+  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
+
+  customElements.define('audio-describe-controller', AudioDescribeElement);
+  // customElements.define('voice-select', VoiceSelectElement);
+</script>
+
+</html>
