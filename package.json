@@ -1,6 +1,7 @@
 {
+  "private": true,
   "name": "audio-describe",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "exports": {
     ".": "./index.js",
@@ -15,9 +16,14 @@
     "servor": "^4.0.2"
   },
   "scripts": {
+    "dry": "npm publish --dry-run",
     "lint": "npx eslint",
     "start": "npx servor"
   },
+  "files": [
+    "index.js",
+    "src/**/*.js"
+  ],
   "description": "Synthesised & Extended Audio Description (SEAD)",
   "keywords": [
     "accessibility",

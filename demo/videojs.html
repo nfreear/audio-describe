@@ -51,11 +51,8 @@
 {
   "imports": {
     "videojs-video-element": "https://cdn.jsdelivr.net/npm/videojs-video-element@1.2/+esm",
-    "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "esm.sh:audio-describe": "https://esm.sh/gh/nfreear/audio-describe",
     "vtt-data": "https://nfreear.github.io/vtt-data/index.js",
-    "audio-describe": "../index.js",
     "app": "../src/util/app.js"
   }
 }
@@ -66,15 +63,6 @@
   import DemoAppElement from 'app';
 
   customElements.define('demo-app', DemoAppElement);
-</script>
-
-<script type="X_module">
-  import 'videojs-video-element';
-  // import 'media-chrome';
-  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
-
-  customElements.define('audio-describe-controller', AudioDescribeElement);
-  // customElements.define('voice-select', VoiceSelectElement);
 </script>
 
 </html>
