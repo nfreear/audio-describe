@@ -114,6 +114,8 @@ export default class VoiceSelectElement extends HTMLElement {
 
     this.#filtered = this.#voices.filter((it) => this.#filterByLang(it));
 
+    const optionArray = [];
+
     for (const voice of this.#filtered) {
       const option = document.createElement('option');
       option.textContent = `${voice.name} (${voice.lang})`;
@@ -126,10 +128,12 @@ export default class VoiceSelectElement extends HTMLElement {
       option.dataset.lang = voice.lang;
       option.dataset.name = voice.name;
 
-      selectElem.appendChild(option);
+      optionArray.push(option);
     }
 
     if (this.#voiceCount) {
+      selectElem.replaceChildren(...optionArray);
+
       this.dataset.ready = true;
       this.dataset.count = this.#voiceCount;
       this.title = `${this.#voiceCount} voices`;
