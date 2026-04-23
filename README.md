@@ -1,7 +1,8 @@
 
 [![Deploy][ci-badge]][ci]
-[![Deploy VTT][ci-vtt-badge]][vtt-data]
+[![VTT Deploy][ci-vtt-badge]][vtt-data]
 [![NPM Version][npm-badge]][npm-pkg]
+[![VTT Tracks][count-badge]][vtt-data]
 
 # Synthesised & Extended Audio Description (SEAD)
 
@@ -83,6 +84,7 @@ More [example VTT][vtt-data].
 [ci-badge]: https://github.com/nfreear/audio-describe/actions/workflows/node.js.yml/badge.svg
 
 [vtt-data]: https://github.com/nfreear/vtt-data.git
+[count-badge]: https://nfreear.github.io/vtt-data/badge.svg
 [ci-vtt]: https://github.com/nfreear/vtt-data/actions/workflows/node.js.yml
   "Deploy VTT-data"
 [ci-vtt-badge]: https://github.com/nfreear/vtt-data/actions/workflows/node.js.yml/badge.svg

@@ -1,9 +1,10 @@
 {
   "name": "audio-describe",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "type": "module",
   "exports": {
     ".": "./index.js",
+    "./vtt-data": "./src/utils/videoData.js",
     "./vtt-parser": "./src/MetaVttParser.js",
     "./app": "./src/utils/app.js"
   },
