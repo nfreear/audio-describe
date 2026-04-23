@@ -1,15 +1,18 @@
 {
-  "private": true,
   "name": "audio-describe",
   "version": "0.8.0",
   "type": "module",
   "exports": {
     ".": "./index.js",
+    "./vtt-parser": "./src/MetaVttParser.js",
     "./app": "./src/utils/app.js"
   },
   "sideEffects": [
     "**/*.css"
   ],
+  "dependencies": {
+    "@plussub/srt-vtt-parser": "^2.0.5"
+  },
   "devDependencies": {
     "eslint": "^9.39.4",
     "neostandard": "^0.13.0",
@@ -22,14 +25,17 @@
   },
   "files": [
     "index.js",
-    "src/**/*.js"
+    "src/**/*.js",
+    "!*BAK*"
   ],
-  "description": "Synthesised & Extended Audio Description (SEAD)",
+  "description": "Synthesised & Extended Audio Description (SEAD) for video.",
   "keywords": [
     "accessibility",
     "audio-description",
     "speech",
     "texttospeech",
+    "text-to-speech",
+    "tts",
     "video",
     "webvtt"
   ],

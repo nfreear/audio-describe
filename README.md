@@ -1,5 +1,7 @@
 
 [![Deploy][ci-badge]][ci]
+[![Deploy VTT][ci-vtt-badge]][vtt-data]
+[![NPM Version][npm-badge]][npm-pkg]
 
 # Synthesised & Extended Audio Description (SEAD)
 
@@ -55,6 +57,8 @@ Now the yacht is sailing down wind, parallel with the shore.
 End of extended audio description.
 ```
 
+More [example VTT][vtt-data].
+
 ## License
 
 * License: [MIT][]
@@ -77,3 +81,12 @@ End of extended audio description.
 [ghp]: https://nfreear.github.io/audio-describe/demo/
 [ci]: https://github.com/nfreear/audio-describe/actions/workflows/node.js.yml
 [ci-badge]: https://github.com/nfreear/audio-describe/actions/workflows/node.js.yml/badge.svg
+
+[vtt-data]: https://github.com/nfreear/vtt-data.git
+[ci-vtt]: https://github.com/nfreear/vtt-data/actions/workflows/node.js.yml
+  "Deploy VTT-data"
+[ci-vtt-badge]: https://github.com/nfreear/vtt-data/actions/workflows/node.js.yml/badge.svg
+  "Deploy VTT-data"
+
+[npm-pkg]: https://www.npmjs.com/package/audio-describe
+[npm-badge]: https://img.shields.io/npm/v/audio-describe
