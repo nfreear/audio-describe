@@ -5,7 +5,7 @@
 
 > Work-In-Progress!
 
-There are two main parts to the API: the `SEADController` core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
+There are two main components of the API: the [`SEADController`][#seadcontroller-class] core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
 
 ## Custom element example
 
@@ -18,6 +18,8 @@ Below is an example of using the `<audio-describe-controller>` custom element:
   </video>
 </audio-describe-controller>
 ```
+
+Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`][#examples-of-supported-mediaelement] below.
 
 ### Importmap
 
@@ -58,8 +60,9 @@ await controller.initialize();
 ```
 
 The `options` object has the following properties:
-* `mediaElement` — `object` documented below.
-* `trackUrl` — Defines the audio description WebVtt file or resource that we wish to fetch. Accepts any of the types listed for [`fetch`][], including `string`, `URL` and `Request`.
+
+* `mediaElement` — `object` [documented below][#mediaelement-property].
+* `trackUrl` — Defines the audio description WebVtt file or URL resource that we wish to fetch. Accepts any of the types supported by [`fetch`][fetch], including `string`, `URL` and [`Request`][request].
 * `isEnabledCallback` — A function that has no arguments, and returns a `boolean` indicating whether audio description is enabled (for example, from the state of a checkbox). Evaluated before each call to the speech synthesis `speak` method.
 * `onStateChange` — A function that has a single `event` parameter, and an `undefined` return. The event contains a `state` property, which indicates whether the video is currently paused for Extended Audio Description, or playing.
 
@@ -91,7 +94,8 @@ Note, in theory any of the custom video elements listed in [muxinc/media-element
 
 [Readme]: https://github.com/nfreear/audio-describe#readme
 
-[mdn:fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch#resource
+[fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch#resource
+[Request]: https://developer.mozilla.org/en-US/docs/Web/API/Request
 [custom element]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 [EventTarget]: https://dom.spec.whatwg.org/#eventtarget
 [addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
