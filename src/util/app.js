@@ -25,12 +25,14 @@ export default class DemoAppElement extends HTMLElement {
   get #alertElement () { return this.querySelector('[ role = alert ]'); }
   get #trackElement () { return this.querySelector('track[ kind = descriptions ]'); }
   get #mediaElement () { return this.querySelector(this.#mediaSelector); }
+  get #voiceSelectElement () { return this.querySelector('voice-select'); }
 
   #expectations () {
     console.assert(this.#query, 'Missing query');
     console.assert(this.#alertElement, 'Missing alert element');
     console.assert(this.#trackElement, 'Missing track element');
     console.assert(this.#mediaElement, 'Missing media element');
+    console.assert(this.#voiceSelectElement, 'Missing voice-select');
     console.assert(this.#result, 'Missing media entry');
   }
 
@@ -57,13 +59,18 @@ export default class DemoAppElement extends HTMLElement {
     this.#expectations();
 
     this.#trackElement.src = this.#result.trackUrl;
+    this.#trackElement.srclang = this.#result.language ?? null;
     this.#mediaElement.setAttribute('src', this.#result.mediaUrl);
+
+    this.#voiceSelectElement.setAttribute('locale', this.#result.language);
 
     customElements.define('voice-select', VoiceSelectElement);
 
     await this.#importVendorLibs();
 
     customElements.define('audio-describe-controller', AudioDescribeElement);
+
+    this.dataset.trackLang = this.#result.language;
 
     console.debug('demo-app:', [this]);
   }

@@ -34,6 +34,7 @@ export default class ExAudioDescriptionController {
     console.assert(typeof this.#isEnabledFN === 'function', 'Missing isEnabledCallback');
     console.assert(typeof this.#onStateChangeFN === 'function', 'Missing onStateChange function');
     console.assert(this.#opt.trackUrl, 'Missing trackUrl (WebVTT)'); // In theory 'trackUrl' can be anything accepted by `fetch()`
+    console.assert(this.#opt.trackLang, 'Missing trackLang');
     // console.assert(this.#opt.provider, 'Missing provider'); // Redundant?
   }
 
@@ -41,7 +42,7 @@ export default class ExAudioDescriptionController {
     this.#describer = new SynthAudioDescriber();
     this.#describer.onMetadata = (entry, ev) => this.#onMetadata(entry, ev);
 
-    await this.#describer.fetchAndParse(this.#opt.trackUrl);
+    await this.#describer.fetchAndParse(this.#opt.trackUrl, this.#opt.trackLang);
 
     this.#mediaEl.addEventListener('timeupdate', (ev) => this.#onTimeupdateEvent(ev));
     this.#mediaEl.addEventListener('play', (ev) => console.debug('Play:', ev));

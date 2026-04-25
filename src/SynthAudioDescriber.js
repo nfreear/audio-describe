@@ -14,6 +14,7 @@ export default class SynthAudioDescriber {
   #spoken = [];
   #metadataCallback;
   #voice;
+  #lang;
 
   set onMetadata (callbackFN) { this.#metadataCallback = callbackFN; }
   get onMetadata () { return this.#metadataCallback; }
@@ -22,9 +23,10 @@ export default class SynthAudioDescriber {
     window.addEventListener('voice-select', (ev) => this.#onVoiceSelect(ev));
   }
 
-  async fetchAndParse (trackUrl) {
+  async fetchAndParse (trackUrl, trackLang) {
     console.assert(typeof this.#metadataCallback === 'function', 'Missing onMetadata function');
 
+    this.#lang = trackLang;
     this.#parser = new MetaVttParser();
     const { entries } = await this.#parser.fetchAndParse(trackUrl);
 
@@ -66,6 +68,7 @@ export default class SynthAudioDescriber {
   speak (text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = this.#voice;
+    utterance.lang = this.#lang;
     speechSynthesis.speak(utterance);
     console.debug('Speak:', text);
   }

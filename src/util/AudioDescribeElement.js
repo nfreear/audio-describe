@@ -13,7 +13,7 @@ export default class AudioDescribeControllerElement extends HTMLElement {
 
   get #mediaSelector () { return this.getAttribute('media-selector') ?? this.#defaultMediaSelector; }
   get #trackSelector () { return this.getAttribute('track-selector') ?? this.#defaultTrackSelector; }
-  get #srclang () { return this.getAttribute('srclang') ?? 'en'; }
+  // Was: get #srclang () { return this.getAttribute('srclang') ?? 'en'; }
 
   // Was: get #doNotTrack () { return this.hasAttribute('dnt'); }
   get #label () { return this.getAttribute('label') ?? 'Audio description'; }
@@ -27,7 +27,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
   }
 
   get #descriptionTrack () {
-    return [...this.#descriptionTracks].find(it => it.srclang === this.#srclang);
+    return this.#descriptionTracks[0];
+    // Was: return [...this.#descriptionTracks].find(it => it.srclang === this.#srclang);
   }
 
   #expectations () {
@@ -48,7 +49,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
       isEnabledCallback: () => checkbox.checked, // Evaluate each time "timeupdate" event is fired.
       onStateChange: (event) => this.#onStateChange(event),
       mediaElement: this.#mediaElement,
-      trackUrl: this.#descriptionTrack.src
+      trackUrl: this.#descriptionTrack.src,
+      trackLang: this.#descriptionTrack.srclang
     });
 
     await this.#seadController.initialize();

@@ -97,8 +97,9 @@ export default class VoiceSelectElement extends HTMLElement {
   }
 
   #dispatchEvent (voice, value, originalEvent) {
+    const { lang } = voice;
     const event = new CustomEvent(this.#eventName, {
-      detail: { voice, value, originalEvent, source: this }
+      detail: { voice, lang, value, originalEvent, source: this }
     });
     this.#eventTarget.dispatchEvent(event);
   }
