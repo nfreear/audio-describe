@@ -61,8 +61,7 @@ export default class DemoAppElement extends HTMLElement {
     this.#trackElement.src = this.#result.trackUrl;
     this.#trackElement.srclang = this.#result.language ?? null;
     this.#mediaElement.setAttribute('src', this.#result.mediaUrl);
-
-    this.#voiceSelectElement.setAttribute('locale', this.#result.language);
+    this.#voiceSelectElement.setAttribute('locale', this.#voiceSelectLocale);
 
     customElements.define('voice-select', VoiceSelectElement);
 
@@ -73,6 +72,12 @@ export default class DemoAppElement extends HTMLElement {
     this.dataset.trackLang = this.#result.language;
 
     console.debug('demo-app:', [this]);
+  }
+
+  get #voiceSelectLocale () {
+    const lang = this.#result.language;
+    // Reduce the number of English voices!
+    return lang === 'en' ? 'en-(gb|ie|au)' : lang;
   }
 
   async #importFindVideo () {
