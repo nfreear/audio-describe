@@ -4,8 +4,9 @@
   "type": "module",
   "exports": {
     ".": "./index.js",
-    "./vtt-data": "./src/utils/videoData.js",
     "./vtt-parser": "./src/MetaVttParser.js",
+    "./voice-select": "./src/util/VoiceSelectElement.js",
+    "./data": "./src/utils/videoData.js",
     "./app": "./src/utils/app.js"
   },
   "sideEffects": [

@@ -5,7 +5,7 @@
 
 > Work-In-Progress!
 
-There are two main components of the API: the [`SEADController`][#seadcontroller-class] core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
+There are two main components of the API: the [`SEADController`](#seadcontroller-class) core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
 
 ## Custom element example
 
@@ -19,7 +19,7 @@ Below is an example of using the `<audio-describe-controller>` custom element:
 </audio-describe-controller>
 ```
 
-Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`][#examples-of-supported-mediaelement] below.
+Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`](#examples-of-supported-mediaelement) below.
 
 ### Importmap
 
@@ -28,7 +28,7 @@ Other elements can be substituted in place of `<video>` — see [Examples of sup
 {
   "imports": {
     "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2"
-    "audio-describe": "https://esm.sh/gh/nfreear/audio-describe"
+    "audio-describe": "https://esm.sh/audio-describe"
   }
 }
 </script>
@@ -45,26 +45,30 @@ customElements.define('audio-describe-controller', AudioDescribeElement);
 
 ## `SEADController` class
 
-The core `SEADController` JavaScript class constructor takes an `options` object as its only parameter. After calling the constructor, the `Promise<undefined> initialize()` method should be called.
+The core `SEADController` JavaScript class constructor takes an `options` object as its only parameter. After calling the constructor, the `initialize()` method should be called.
+
 ```js
 import SEADController from 'audio-describe';
 
 const controller = new SEADController({
   mediaElement: document.querySelector('video'),
   trackUrl: 'path/to/ext-audio-description.en.vtt',
+  trackLang: 'en',
   isEnabledCallback:  () => { …; return true; }, // Return true or false.
   onStateChange: ({ state }) => { …; return undefined; }
 });
 
+// initialize returns Promise<undefined>.
 await controller.initialize();
 ```
 
-The `options` object has the following properties:
+The `options` object has the following required properties:
 
-* `mediaElement` — `object` [documented below][#mediaelement-property].
-* `trackUrl` — Defines the audio description WebVtt file or URL resource that we wish to fetch. Accepts any of the types supported by [`fetch`][fetch], including `string`, `URL` and [`Request`][request].
-* `isEnabledCallback` — A function that has no arguments, and returns a `boolean` indicating whether audio description is enabled (for example, from the state of a checkbox). Evaluated before each call to the speech synthesis `speak` method.
-* `onStateChange` — A function that has a single `event` parameter, and an `undefined` return. The event contains a `state` property, which indicates whether the video is currently paused for Extended Audio Description, or playing.
+* `mediaElement` — `object` [documented below](#mediaelement-property).
+* `trackUrl` — Defines the audio description WebVTT file or URL resource that we wish to fetch. Accepts any of the types supported by [`fetch`][fetch], including `string`, `URL` and [`Request`][request].
+* `trackLang` — The [BCP 47][] language tag for the human language of the WebVTT track. In general, prefer less-specific tags like `en` and `es` instead of the more specific, `en-gb` or `es-mx`. Exceptions include `zh-hans` for Simplified Chinese and `zh-hant` for Traditional Chinese.
+* `isEnabledCallback` — A callback function that takes no arguments, and returns a `boolean` indicating whether audio description is enabled (for example, from the state of a checkbox). Evaluated before each call to the speech synthesis `speak` method.
+* `onStateChange` — An event handler function that accepts a single `event` parameter, and has an `undefined` return. The event contains a `state` property, which indicates whether the video is currently paused for Extended Audio Description, or playing — `const { state } = event`.
 
 ### `mediaElement` property
 
@@ -94,6 +98,9 @@ Note, in theory any of the custom video elements listed in [muxinc/media-element
 
 [Readme]: https://github.com/nfreear/audio-describe#readme
 
+[cdn:un]: http://unpkg.com/audio-describe
+[cdn:esm.sh]: https://esm.sh/audio-describe
+
 [fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch#resource
 [Request]: https://developer.mozilla.org/en-US/docs/Web/API/Request
 [custom element]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
@@ -115,3 +122,6 @@ Note, in theory any of the custom video elements listed in [muxinc/media-element
 [youtube-video]: https://www.media-chrome.org/docs/en/media-elements/youtube-video
 [mux Inc]: http://mux.com/
 [muxinc/media-elements]: https://github.com/muxinc/media-elements
+
+[bcp 47]: https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag
+[rfc5646]: https://www.rfc-editor.org/info/rfc5646

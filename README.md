@@ -6,9 +6,38 @@
 
 # Synthesised & Extended Audio Description (SEAD)
 
-__Experimental__: I have not (_yet_) researched how acceptable synthesised speech is to end-users for audio description on the Web.
+__Experimental__: I have not (_yet much_) researched how acceptable synthesised speech is to end-users for audio description on the Web.
 
 * Demo: [nfreear.github.io/audio-describe/demo][ghp]
+
+## Usage
+
+```sh
+npm install audio-describe
+```
+
+### CDNs
+* Unpkg.com: [unpkg.com/audio-describe][cdn:un]
+* esm.sh: [esm.sh/audio-describe][cdn:esm.sh]
+
+### Javascript
+JavaScript to import and register the `audio-describe-controller` custom element:
+```js
+import { AudioDescribeElement } from 'audio-describe';
+
+customElements.define('audio-describe-controller', AudioDescribeElement);
+```
+
+### HTML
+```html
+<audio-describe-controller>
+  <video src="path/to/video.mp4" controls>
+    <track kind="descriptions" srclang="en" src="path/to/ext-audio-description.en.vtt">
+  </video>
+</audio-describe-controller>
+```
+
+Other elements can be substituted in place of `<video>`, to support for example, YouTube, Vimeo, and Video.js — see [`mediaElement` property][mediaElement] in the API.
 
 ## Problem
 
@@ -27,6 +56,7 @@ The proposed solution combines:
 
 > Work-In-Progress!
 
+* [Background][doc:background]
 * [WebVTT extension, for Synthesised & Extended Audio Description][doc:vtt-ext]
 * [API][doc:api]
 
@@ -67,6 +97,8 @@ More [example VTT][vtt-data].
 [mit]: https://github.com/nfreear/audio-describe/blob/main/LICENSE
 [doc:vtt-ext]: https://github.com/nfreear/audio-describe/blob/main/docs/WEBVTT-EXT.md
 [doc:api]: https://github.com/nfreear/audio-describe/blob/main/docs/API.md
+[doc:background]: https://github.com/nfreear/audio-describe/blob/main/docs/BACKGROUND.md
+[mediaElement]: https://github.com/nfreear/audio-describe/blob/main/docs/API.md#mediaelement-property
 
 [wai:av-plan]: https://www.w3.org/WAI/media/av/planning/
 [wcag:ead]: https://www.w3.org/TR/WCAG22/#extended-audio-description-prerecorded
@@ -92,3 +124,6 @@ More [example VTT][vtt-data].
 
 [npm-pkg]: https://www.npmjs.com/package/audio-describe
 [npm-badge]: https://img.shields.io/npm/v/audio-describe
+
+[cdn:un]: http://unpkg.com/audio-describe
+[cdn:esm.sh]: https://esm.sh/audio-describe

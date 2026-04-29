@@ -20,7 +20,11 @@ export default class VoiceSelectElement extends HTMLElement {
 
   /** The lang tag to filter by - can be a plain string or a RegEx pattern.
    */
-  get #locale () { return this.getAttribute('locale') ?? 'en'; }
+  get #locale () {
+    const locale = this.getAttribute('locale') ?? 'en';
+    console.assert(locale !== 'undefined', 'Bad locale attribute');
+    return locale;
+  }
 
   get #label () { return this.getAttribute('label') ?? 'Voice '; }
   get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test speech'; }

@@ -27,6 +27,8 @@ export default class DemoAppElement extends HTMLElement {
   get #mediaElement () { return this.querySelector(this.#mediaSelector); }
   get #voiceSelectElement () { return this.querySelector('voice-select'); }
 
+  get #provider () { return this.#mediaElement.tagName.toLowerCase(); }
+
   #expectations () {
     console.assert(this.#query, 'Missing query');
     console.assert(this.#alertElement, 'Missing alert element');
@@ -45,7 +47,9 @@ export default class DemoAppElement extends HTMLElement {
   }
 
   async #importVendorLibs () {
-    await import(`${this.#mediaSelector}-element`);
+    if (this.#provider !== 'video') {
+      await import(`${this.#provider}-element`);
+    }
     if (this.#mediaChrome) {
       await import('media-chrome');
     }
