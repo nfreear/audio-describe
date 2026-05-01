@@ -17,6 +17,11 @@ export default class VoiceSelectElement extends HTMLElement {
   #voices;
   #filtered;
   #selectedVoice;
+  // https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
+  #speechRate = 1.0;
+
+  #selectElem;
+  #rateInputElem;
 
   /** The lang tag to filter by - can be a plain string or a RegEx pattern.
    */
@@ -26,8 +31,9 @@ export default class VoiceSelectElement extends HTMLElement {
     return locale;
   }
 
-  get #label () { return this.getAttribute('label') ?? 'Voice '; }
-  get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test speech'; }
+  get #label () { return this.getAttribute('label') ?? 'Voice'; }
+  get #rateLabel () { return this.getAttribute('rate-label') ?? 'Speech rate'; }
+  get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test'; } // Was: 'Test speech'
   get #testText () { return this.getAttribute('test-text') ?? 'Hello world!'; }
 
   get #voiceCount () { return this.#filtered.length; }
@@ -41,12 +47,18 @@ export default class VoiceSelectElement extends HTMLElement {
 
     const root = this.attachShadow({ mode: 'open' });
     const { label, select, button } = this.#createElements();
+    const { labelRate, inputRate } = this.#createSpeechRateElements();
+
+    this.#selectElem = select;
+    this.#rateInputElem = inputRate;
 
     root.appendChild(label);
     root.appendChild(select);
+    root.appendChild(labelRate);
     root.appendChild(button);
 
-    select.addEventListener('change', (ev) => this.#onChange(ev));
+    select.addEventListener('change', (ev) => this.#onChange(ev, 'voice'));
+    inputRate.addEventListener('change', (ev) => this.#onChange(ev, 'rate'));
     button.addEventListener('click', (ev) => this.#speak(this.#testText, ev));
 
     this.#populateVoiceList(select);
@@ -86,24 +98,48 @@ export default class VoiceSelectElement extends HTMLElement {
     return { label, select, button };
   }
 
-  #onChange (ev) {
-    const { target } = ev;
-    const { value } = target;
-    // const part = value.split('/');
+  #createSpeechRateElements () {
+    const labelRate = document.createElement('label');
+    const span = document.createElement('span');
+    const input = document.createElement('input');
 
-    const voice = this.#filtered.find((it) => `${it.name}/${it.lang}` === value);
+    labelRate.setAttribute('part', 'label rate');
+    input.setAttribute('part', 'input rate');
+
+    input.type = 'number';
+    input.min = 0.5;
+    input.max = 2.0;
+    input.step = 0.25;
+    input.value = 1.0;
+
+    span.textContent = this.#rateLabel;
+
+    labelRate.appendChild(span);
+    labelRate.appendChild(input);
+
+    return { labelRate, inputRate: input };
+  }
+
+  #onChange (ev, name) {
+    const voiceValue = this.#selectElem.value;
+    const rateValue = parseFloat(this.#rateInputElem.value);
+
+    console.debug('onChange:', name, voiceValue, rateValue, ev);
+
+    const voice = this.#filtered.find((it) => `${it.name}/${it.lang}` === voiceValue);
 
     console.assert(voice, 'Voice not found');
 
     this.#selectedVoice = voice;
+    this.#speechRate = rateValue;
 
-    this.#dispatchEvent(voice, value, ev);
+    this.#dispatchEvent(voice, rateValue, ev);
   }
 
-  #dispatchEvent (voice, value, originalEvent) {
+  #dispatchEvent (voice, speechRate, originalEvent) {
     const { lang } = voice;
     const event = new CustomEvent(this.#eventName, {
-      detail: { voice, lang, value, originalEvent, source: this }
+      detail: { voice, lang, speechRate, originalEvent, source: this }
     });
     this.#eventTarget.dispatchEvent(event);
   }
@@ -115,13 +151,9 @@ export default class VoiceSelectElement extends HTMLElement {
       return;
     }
 
-    this.#voices = speechSynthesis.getVoices();
+    const filteredVoices = this.#getFilteredVoices();
 
-    this.#filtered = this.#voices.filter((it) => this.#filterByLang(it));
-
-    const optionArray = [];
-
-    for (const voice of this.#filtered) {
+    const optionArray = filteredVoices.map((voice) => {
       const option = document.createElement('option');
       option.textContent = `${voice.name} (${voice.lang})`;
       option.value = `${voice.name}/${voice.lang}`;
@@ -133,8 +165,8 @@ export default class VoiceSelectElement extends HTMLElement {
       option.dataset.lang = voice.lang;
       option.dataset.name = voice.name;
 
-      optionArray.push(option);
-    }
+      return option;
+    });
 
     if (this.#voiceCount) {
       selectElem.replaceChildren(...optionArray);
@@ -145,11 +177,20 @@ export default class VoiceSelectElement extends HTMLElement {
     }
   }
 
+  #getFilteredVoices () {
+    this.#voices = speechSynthesis.getVoices();
+
+    this.#filtered = this.#voices.filter((it) => this.#filterByLang(it));
+    return this.#filtered;
+  }
+
   #speak (text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = this.#selectedVoice;
+    utterance.rate = this.#speechRate;
+    utterance.onerror = (err) => console.error('Speech Error:', err);
     speechSynthesis.speak(utterance);
-    console.debug('Speak:', text);
+    console.debug('Speak:', text, utterance);
   }
 
   #filterByLang (voice) {

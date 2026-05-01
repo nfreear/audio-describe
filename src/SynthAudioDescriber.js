@@ -15,6 +15,7 @@ export default class SynthAudioDescriber {
   #metadataCallback;
   #voice;
   #lang;
+  #speechRate = 1.0;
 
   set onMetadata (callbackFN) { this.#metadataCallback = callbackFN; }
   get onMetadata () { return this.#metadataCallback; }
@@ -69,17 +70,31 @@ export default class SynthAudioDescriber {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = this.#voice;
     utterance.lang = this.#lang;
+    utterance.rate = this.#speechRate;
+    utterance.onerror = (err) => this.#onSpeechError(err);
     speechSynthesis.speak(utterance);
-    console.debug('Speak:', text);
+    console.debug('Speak:', text, utterance);
+  }
+
+  #onSpeechError (err) {
+    console.error('Speech Error:', err.code, err);
+    document.documentElement.dataset.error = `speech:${err.error}`;
+    const ELEM = document.querySelector('[role = alert]');
+    console.assert(ELEM, 'Missing alert element');
+    if (ELEM) {
+      ELEM.textContent = `Speech Error: ${err.error}`;
+    }
   }
 
   #onVoiceSelect (ev) {
     console.assert(ev.detail, 'Missing event detail');
     console.assert(ev.detail.voice, 'Missing voice');
-    const { voice } = ev.detail;
+    console.assert(ev.detail.speechRate, 'Missing rate');
+    const { voice, speechRate } = ev.detail;
 
     this.#voice = voice;
+    this.#speechRate = speechRate;
 
-    console.debug('onVoiceSelect:', voice, ev);
+    console.debug('onVoiceSelect:', voice, speechRate, ev);
   }
 }

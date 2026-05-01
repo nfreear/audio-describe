@@ -48,6 +48,14 @@ voice-select {
     background-color: #f6f6f6;
     border-radius: .2rem;
   }
+
+  &::part(input rate) {
+    width: 3rem;
+  }
+
+  &::part(label) {
+    margin: 0 .1rem;
+  }
 }
 
 ::part(input),
@@ -55,7 +63,11 @@ voice-select {
 ::part(button) {
   font-size: .95rem;
   outline-offset: .3rem;
-  padding: .3rem .6rem;
+  padding: .3rem .2rem;
+}
+
+::part(button) {
+  padding: .3rem .5rem;
 }
 
 [ data-error ] {
@@ -100,7 +112,7 @@ body {
   color: #eee;
   font-family: sans-serif;
   margin: auto;
-  max-width: 40rem;
+  max-width: 41rem;
   padding: 0 1rem;
 
   a[ href ] {
