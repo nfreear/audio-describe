@@ -1,13 +1,13 @@
 {
   "name": "audio-describe",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "type": "module",
   "exports": {
     ".": "./index.js",
     "./vtt-parser": "./src/MetaVttParser.js",
     "./voice-select": "./src/util/VoiceSelectElement.js",
     "./data": "./src/utils/videoData.js",
-    "./app": "./src/utils/app.js"
+    "./demo-app": "./src/utils/DemoAppElement.js"
   },
   "sideEffects": [
     "**/*.css"
