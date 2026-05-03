@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<link rel="stylesheet" href="assets/mock.css">
+
+<title>Mock demo</title>
+
+<h1>Mock demo</h1>
+
+<main id="mock-app">
+
+<p>
+  <output>0.00</output>
+</p>
+<p>
+  <button>Play</button>
+</p>
+
+</main>
+
+<footer>
+  <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
+</footer>
+
+
+<script type="importmap">
+{
+  "imports": {
+    "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
+    "un:@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
+    "event-target-shim": "https://esm.sh/event-target-shim@^6",
+    "mock-app": "../src/mock/mockApp.js"
+  }
+}
+</script>
+
+<script type="module">
+ import mockWebApp from 'mock-app';
+
+ mockWebApp();
+</script>
+
+</html>
