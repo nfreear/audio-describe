@@ -6,27 +6,29 @@
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet" href="assets/style.css">
 
-<title> Synthesised & Extended Audio Description — YouTube Demo </title>
+<title> Synthesised & Extended Audio Description — Video </title>
 
 <header>
-  <h1> Synthesised & Extended Audio Description — YouTube Demo </h1>
+  <h1> Synthesised & Extended Audio Description — Video </h1>
 </header>
 
 <main>
 
-<demo-app vendor-vtt media-chrome media-selector="youtube-video" default-id="yt:uncrpd1">
+<p>This demo uses the native HTML <code>&lt;video></code> element.</p>
+
+
+<demo-app vendor-vtt media-chrome media-selector="video" default-id="mux:coffee">
 
 <p role="alert"></p>
 
 <voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select>
 
-<audio-describe-controller>
+<audio-describe-controller media-selector="video">
   <media-controller>
-    <youtube-video slot="media" src crossorigin X_controls >
-      <track kind="descriptions" srclang="en" src>
+    <video crossorigin slot="media" X_controls >
+      <track kind="descriptions" srclang="en" src >
       <p>Loading video…</p>
-      <a href="https://youtu.be/tO01J-M3g0U">Video on YouTube</a>
-    </youtube-video>
+    </video>
     <media-control-bar>
       <media-play-button></media-play-button>
       <media-mute-button></media-mute-button>
@@ -48,14 +50,16 @@
 <script type="importmap">
 {
   "imports": {
-    "youtube-video-element": "https://cdn.jsdelivr.net/npm/youtube-video-element@1.1/+esm",
     "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "vtt-data": "https://nfreear.github.io/vtt-data/index.js"
+    "vtt-data": "https://nfreear.github.io/vtt-data/index.js",
+    "local:vtt-data": "../vtt-data/index.js"
   }
 }
 </script>
 
+
 <script type="module" src="lib/app.js"></script>
+
 
 </html>

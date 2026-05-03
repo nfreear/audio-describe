@@ -6,9 +6,11 @@
 
 # Synthesised & Extended Audio Description (SEAD)
 
-__Experimental__: I have not (_yet much_) researched how acceptable synthesised speech is to end-users for audio description on the Web.
+Library to use browser-based text-to-speech for extended audio description of video.
 
 * Demo: [nfreear.github.io/audio-describe/demo][ghp]
+
+__Experimental__: I have not (_yet much_) researched how acceptable synthesised speech is to end-users for audio description on the Web.
 
 ## Usage
 
