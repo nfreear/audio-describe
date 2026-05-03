@@ -43,7 +43,7 @@ export default class SynthAudioDescriber {
         this.#speakOnce(entry.text);
         // .
       } else if (entry.meta) {
-        this.#metadataCallback(entry, ev);
+        this.#metadataCallback(entry, this.#speechRate, ev);
 
         // For WebVTT file: "vbde2" - it works!
         if (entry.meta.text) {
@@ -89,7 +89,7 @@ export default class SynthAudioDescriber {
   #onVoiceSelect (ev) {
     console.assert(ev.detail, 'Missing event detail');
     console.assert(ev.detail.voice, 'Missing voice');
-    console.assert(ev.detail.speechRate, 'Missing rate');
+    console.assert(typeof ev.detail.speechRate === 'number', 'Missing rate number');
     const { voice, speechRate } = ev.detail;
 
     this.#voice = voice;

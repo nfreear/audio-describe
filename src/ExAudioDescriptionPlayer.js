@@ -65,8 +65,9 @@ export default class ExAudioDescriptionController {
     this.#describer.onTimeupdateEvent(ev, seconds, this.#isEnabledFN());
   }
 
-  #onMetadata (entry, event) {
+  #onMetadata (entry, speechRate, event) {
     console.assert(entry && entry.meta, 'Missing meta');
+
     const { meta, from } = entry;
 
     if (from === this.#lastFromTime) {
@@ -78,7 +79,7 @@ export default class ExAudioDescriptionController {
       if (this.#pauseID) {
         console.debug('Already paused:', this.#pauseID);
       } else {
-        this.#setTimeout(meta, () => {
+        this.#setTimeout(meta, speechRate, () => {
           this.#mediaEl.play();
           this.#onStateChangeFN({ state: 'play', entry, event });
         });
@@ -92,19 +93,20 @@ export default class ExAudioDescriptionController {
     console.debug('onMetadata:', meta, event);
   }
 
-  #setTimeout (meta, callbackFN) {
+  #setTimeout (meta, speechRate, callbackFN) {
     this.#pauseID = setTimeout(() => {
       this.#pauseID = null;
       callbackFN();
     },
-    this.#milliseconds(meta));
+    this.#milliseconds(meta, speechRate));
   }
 
-  #milliseconds (meta) {
+  #milliseconds (meta, speechRate) {
     console.assert(typeof meta.pauseMedia === 'number', 'pauseMedia should be a positive integer');
+    console.assert(typeof speechRate === 'number', 'speechRate should be a floating point number');
     const pauseMS = parseInt(meta.pauseMedia);
     console.assert(pauseMS > 1000, 'pauseMedia should be greater than 1000ms');
-    return pauseMS;
+    return pauseMS / speechRate;
   }
 
   // Legacy?

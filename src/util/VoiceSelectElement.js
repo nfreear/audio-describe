@@ -35,6 +35,7 @@ export default class VoiceSelectElement extends HTMLElement {
   get #rateLabel () { return this.getAttribute('rate-label') ?? 'Speech rate'; }
   get #buttonLabel () { return this.getAttribute('button-label') ?? 'Test'; } // Was: 'Test speech'
   get #testText () { return this.getAttribute('test-text') ?? 'Hello world!'; }
+  get #defaultText () { return this.getAttribute('default-text') ?? ' – default'; } // Thin space U+2009.
 
   get #voiceCount () { return this.#filtered.length; }
   get value () { return this.#selectedVoice; }
@@ -124,8 +125,6 @@ export default class VoiceSelectElement extends HTMLElement {
     const voiceValue = this.#selectElem.value;
     const rateValue = parseFloat(this.#rateInputElem.value);
 
-    console.debug('onChange:', name, voiceValue, rateValue, ev);
-
     const voice = this.#filtered.find((it) => `${it.name}/${it.lang}` === voiceValue);
 
     console.assert(voice, 'Voice not found');
@@ -159,7 +158,7 @@ export default class VoiceSelectElement extends HTMLElement {
       option.value = `${voice.name}/${voice.lang}`;
 
       if (voice.default) {
-        option.textContent += ' — DEFAULT';
+        option.textContent += this.#defaultText;
       }
 
       option.dataset.lang = voice.lang;
