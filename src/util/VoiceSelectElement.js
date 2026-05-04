@@ -46,21 +46,22 @@ export default class VoiceSelectElement extends HTMLElement {
       return;
     }
 
-    const root = this.attachShadow({ mode: 'open' });
-    const { label, select, button } = this.#createElements();
+    const { form, label, select, button } = this.#createElements();
     const { labelRate, inputRate } = this.#createSpeechRateElements();
 
     this.#selectElem = select;
     this.#rateInputElem = inputRate;
 
-    root.appendChild(label);
-    root.appendChild(select);
-    root.appendChild(labelRate);
-    root.appendChild(button);
+    form.appendChild(label);
+    form.appendChild(select);
+    form.appendChild(labelRate);
+    form.appendChild(button);
+
+    this.attachShadow({ mode: 'open' }).appendChild(form);
 
     select.addEventListener('change', (ev) => this.#onChange(ev, 'voice'));
     inputRate.addEventListener('change', (ev) => this.#onChange(ev, 'rate'));
-    button.addEventListener('click', (ev) => this.#speak(this.#testText, ev));
+    form.addEventListener('submit', (ev) => this.#speak(this.#testText, ev));
 
     this.#populateVoiceList(select);
 
@@ -83,6 +84,7 @@ export default class VoiceSelectElement extends HTMLElement {
   }
 
   #createElements () {
+    const form = document.createElement('form');
     const label = document.createElement('label');
     const select = document.createElement('select');
     const button = document.createElement('button');
@@ -96,7 +98,7 @@ export default class VoiceSelectElement extends HTMLElement {
     select.setAttribute('part', 'select');
     button.setAttribute('part', 'button');
 
-    return { label, select, button };
+    return { form, label, select, button };
   }
 
   #createSpeechRateElements () {
@@ -112,6 +114,7 @@ export default class VoiceSelectElement extends HTMLElement {
     input.max = 2.0;
     input.step = 0.25;
     input.value = 1.0;
+    input.setAttribute('required', '');
 
     span.textContent = this.#rateLabel;
 
@@ -128,6 +131,7 @@ export default class VoiceSelectElement extends HTMLElement {
     const voice = this.#filtered.find((it) => `${it.name}/${it.lang}` === voiceValue);
 
     console.assert(voice, 'Voice not found');
+    console.assert(rateValue, 'Speech rate not valid');
 
     this.#selectedVoice = voice;
     this.#speechRate = rateValue;
@@ -183,13 +187,18 @@ export default class VoiceSelectElement extends HTMLElement {
     return this.#filtered;
   }
 
-  #speak (text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = this.#selectedVoice;
-    utterance.rate = this.#speechRate;
-    utterance.onerror = (err) => console.error('Speech Error:', err);
-    speechSynthesis.speak(utterance);
-    console.debug('Speak:', text, utterance);
+  #speak (text, ev) {
+    if (ev) { ev.preventDefault(); }
+    try {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onerror = (err) => console.error('Speech Error:', err);
+      utterance.voice = this.#selectedVoice;
+      utterance.rate = this.#speechRate;
+      speechSynthesis.speak(utterance);
+      console.debug('Speak:', text, utterance);
+    } catch (err) {
+      console.error('Speech Error (catch):', err);
+    }
   }
 
   #filterByLang (voice) {

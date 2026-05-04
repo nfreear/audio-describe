@@ -67,29 +67,33 @@ export default class SynthAudioDescriber {
   }
 
   speak (text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = this.#voice;
-    utterance.lang = this.#lang;
-    utterance.rate = this.#speechRate;
-    utterance.onerror = (err) => this.#onSpeechError(err);
-    speechSynthesis.speak(utterance);
-    console.debug('Speak:', text, utterance);
+    try {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onerror = (err) => this.#onSpeechError(err);
+      utterance.voice = this.#voice;
+      utterance.lang = this.#lang;
+      utterance.rate = this.#speechRate;
+      speechSynthesis.speak(utterance);
+      console.debug('Speak:', text, utterance);
+    } catch (err) {
+      this.#onSpeechError(err);
+    }
   }
 
   #onSpeechError (err) {
-    console.error('Speech Error:', err.code, err);
-    document.documentElement.dataset.error = `speech:${err.error}`;
+    console.error('Speech Error:', err);
+    document.documentElement.dataset.error = `speech:${err.error ?? err.name}`;
     const ELEM = document.querySelector('[role = alert]');
     console.assert(ELEM, 'Missing alert element');
     if (ELEM) {
-      ELEM.textContent = `Speech Error: ${err.error}`;
+      ELEM.textContent = `Speech Error: ${err.error ?? err}`;
     }
   }
 
   #onVoiceSelect (ev) {
     console.assert(ev.detail, 'Missing event detail');
     console.assert(ev.detail.voice, 'Missing voice');
-    console.assert(typeof ev.detail.speechRate === 'number', 'Missing rate number');
+    console.assert(ev.detail.speechRate, 'Missing rate number');
     const { voice, speechRate } = ev.detail;
 
     this.#voice = voice;
