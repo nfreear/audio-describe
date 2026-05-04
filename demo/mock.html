@@ -1,21 +1,27 @@
 <!doctype html>
 <html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="assets/mock.css">
 
-<title>Mock demo</title>
+<title> Synthesised & Extended Audio Description — Mock demo </title>
 
-<h1>Mock demo</h1>
+<header>
+  <h1> Synthesised & Extended Audio Description </h1>
+  <h2> Mock <code>mediaElement</code> demo </h2>
+</header>
 
 <main id="mock-app">
-
-<p>
-  <output>0.00</output>
-</p>
-<p>
-  <button>Play</button>
-</p>
-
+  <p>
+    <label><input type="checkbox" checked> Live region</label>
+  </p>
+  <p>
+    <output>0.00</output>
+  </p>
+  <p>
+    <button>Play</button>
+  </p>
 </main>
 
 <footer>
@@ -27,7 +33,6 @@
 {
   "imports": {
     "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
-    "un:@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
     "event-target-shim": "https://esm.sh/event-target-shim@^6",
     "mock-app": "../src/mock/mockApp.js"
   }

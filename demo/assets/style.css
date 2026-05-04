@@ -94,7 +94,11 @@ media-controller {
 }
 
 h1 {
-  font-size: 1.7rem;
+  font-size: 1.75rem;
+  font-weight: normal;
+}
+
+h2 {
   font-weight: normal;
 }
 
@@ -104,7 +108,7 @@ main {
 
 footer {
   border-top: 2px solid gray;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 body {

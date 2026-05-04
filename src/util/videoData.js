@@ -22,6 +22,17 @@ const DATA = [
     language: 'en',
     duration: '01:39',
     provider: 'vimeo'
+  }, {
+    id: 'example',
+    title: 'forest_ambient_01_loop.wav, by rolandasb',
+    rights: 'License: Public Domain (CC0)',
+    mediaUrl: 'https://cdn.freesound.org/previews/170/170515_2295288-lq.mp3',
+    trackUrl: import.meta.resolve('../../tracks/example.ext-ad.en.vtt'),
+    language: 'en',
+    moreUrl: 'https://freesound.org/people/rolandasb/sounds/170515/',
+    // moreUrl: 'https://freesound.org/people/Erokia/sounds/432500/',
+    duration: '01:28',
+    provider: 'video'
   }
 ];
 

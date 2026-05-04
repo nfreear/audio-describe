@@ -87,10 +87,10 @@ The `mediaElement` property is an instance of any class that extends [`HTMLEleme
 
 #### Examples of supported `mediaElement`
 
-* [`<video>`][video] — The native HTML5 video element.
-* [`<vimeo-video>`][vimeo-video] — "A custom element for the Vimeo player with an API that matches the `<video>` API."
-* [`<youtube-video>`][youtube-video] — "A custom element for the YouTube player with an API that matches the `<video>` API."
-* [`<videojs-video`][videojs-video] — _(Work-in-progress)_ "A custom element for Video.js with an API that matches the `<video>` API."
+* [`<video>`][video] — The native HTML5 video element — [video demo][].
+* [`<vimeo-video>`][vimeo-video] — "A custom element for the Vimeo player with an API that matches the `<video>` API" — [Vimeo demo][].
+* [`<youtube-video>`][youtube-video] — "A custom element for the YouTube player with an API that matches the `<video>` API" — [YouTube demo][].
+* [`<videojs-video`][videojs-video] — _(Work-in-progress)_ "A custom element for Video.js with an API that matches the `<video>` API" — [Video.js demo][].
 
 Note, in theory any of the custom video elements listed in [muxinc/media-elements][] repository on GitHub should work (_thank you [Mux Inc][]!_). They have _not_ been tested, except for the ones listed above.
 
@@ -125,3 +125,9 @@ Note, in theory any of the custom video elements listed in [muxinc/media-element
 
 [bcp 47]: https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag
 [rfc5646]: https://www.rfc-editor.org/info/rfc5646
+
+[video demo]: https://nfreear.github.io/audio-describe/demo/
+[youtube demo]: https://nfreear.github.io/audio-describe/demo/youtube.html
+[vimeo demo]: https://nfreear.github.io/audio-describe/demo/vimeo.html
+[video.js demo]: https://nfreear.github.io/audio-describe/demo/videojs.html
+[mock demo]: https://nfreear.github.io/audio-describe/demo/mock.html

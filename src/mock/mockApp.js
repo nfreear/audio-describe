@@ -8,6 +8,7 @@ export default async function mockWebApp (durationSeconds = 20) {
   const appElem = document.querySelector('#mock-app');
   const playButton = appElem.querySelector('button');
   const outputElem = appElem.querySelector('output');
+  const checkBox = appElem.querySelector('[type = checkbox]');
 
   const mockElement = new MockMediaElement(durationSeconds);
 
@@ -29,8 +30,24 @@ export default async function mockWebApp (durationSeconds = 20) {
     }
   });
 
+  checkBox.addEventListener('change', (ev) => {
+    const { checked } = ev.target;
+    outputElem.setAttribute('aria-live', checked ? 'polite' : 'off');
+    console.debug('live region change:', checked, ev);
+  });
+
   mockElement.addEventListener('timeupdate', (ev) => {
-    outputElem.value = `Current time: ${mockElement.currentTime}s`;
+    const { currentTime } = ev.target;
+    // Only update every second.
+    if (currentTime === parseInt(currentTime)) {
+      outputElem.value = `Current time: ${currentTime}s`;
+    }
+  });
+
+  mockElement.addEventListener('ended', (ev) => {
+    console.debug('ended:', mockElement);
+    outputElem.value = 'The End.';
+    outputElem.dataset.extState = 'ended';
   });
 
   console.debug('mock-app:', mockElement, seadController);

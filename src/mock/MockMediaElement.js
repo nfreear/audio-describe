@@ -3,6 +3,7 @@ import { EventTarget, Event } from 'event-target-shim';
 /**
  * A minimal class that fulfills the API requirements for a `mediaElement`.
  *
+ * @see https://nfreear.github.io/audio-describe/demo/mock.html
  * @see https://github.com/nfreear/audio-describe/blob/main/docs/API.md#mediaelement-property
  */
 export default class MockMediaElement extends EventTarget {
