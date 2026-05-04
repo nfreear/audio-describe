@@ -75,7 +75,7 @@ Below is an example of using the `<audio-describe-controller>` custom element:
 The `<audio-describe-controller>` custom element has two required child elements:
 
 * A `<video>` element, or another element that fulfills the [`mediaElement` requirements](#mediaelement-property).
-* A `<track>` element, with a `kind` value of `descriptions` and `src` and `srclang` attributes.
+* A [`<track>`][track] element, with a `kind` value of `descriptions` and `src` and `srclang` attributes.
 
 Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`](#examples-of-supported-mediaelement) above.
 
@@ -125,6 +125,7 @@ customElements.define('audio-describe-controller', AudioDescribeElement);
 [mdn:video]: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video
 [HTMLElement]: https://html.spec.whatwg.org/multipage/dom.html#htmlelement
 [mdn:HTMLElement]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
+[track]: https://html.spec.whatwg.org/multipage/media.html#attr-track-kind-keyword-descriptions
 [HTMLMediaElement]: https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement
 [mdn:HTMLMediaElement]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 [play]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play

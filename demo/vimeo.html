@@ -14,11 +14,13 @@
 
 <main>
 
+<p>This demo uses the <a href="https://www.media-chrome.org/docs/en/media-elements/vimeo-video">&lt;vimeo-video></a> custom element for the Vimeo player, with an API that matches the <code>&lt;video></code> API.</p>
+
 <voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select>
 
 <audio-describe-controller>
-  <vimeo-video src="https://vimeo.com/1006361470" crossorigin X_muted controls>
-    <track label="AD (extended)" kind="descriptions" default srclang="en" src="../tracks/sailing-bib-bear.ext-ad.en.vtt">
+  <vimeo-video src="https://vimeo.com/1006361470" crossorigin controls>
+    <track kind="descriptions" srclang="en" src="../tracks/sailing-bib-bear.ext-ad.en.vtt">
     <p>Loading video…</p>
     <a href="https://vimeo.com/1006361470">Demo video</a>
   </vimeo-video>
@@ -35,8 +37,7 @@
 {
   "imports": {
     "vimeo-video-element": "https://cdn.jsdelivr.net/npm/vimeo-video-element@1.1/+esm",
-    "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
-    "esm.sh:audio-describe": "https://esm.sh/gh/nfreear/audio-describe",
+    "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
     "audio-describe": "../index.js"
   }
 }

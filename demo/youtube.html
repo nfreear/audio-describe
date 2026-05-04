@@ -15,6 +15,8 @@
 
 <main>
 
+<p>This demo uses the <a href="https://www.media-chrome.org/docs/en/media-elements/youtube-video">&lt;youtube-video></a> custom element for the YouTube player, with an API that matches the <code>&lt;video></code> API.</p>
+
 <demo-app vendor-vtt media-chrome media-selector="youtube-video" default-id="yt:uncrpd1">
 
 <p role="alert"></p>
@@ -51,7 +53,7 @@
   "imports": {
     "youtube-video-element": "https://cdn.jsdelivr.net/npm/youtube-video-element@1.1/+esm",
     "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
-    "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
+    "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
     "vtt-data": "https://nfreear.github.io/vtt-data/index.js"
   }
 }

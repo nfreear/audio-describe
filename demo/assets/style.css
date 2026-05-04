@@ -29,6 +29,7 @@ audio-describe-controller {
 
 voice-select {
   border-radius: 1px;
+  line-height: 2.2;
   min-height: 1rem;
   min-width: 1rem;
 
@@ -104,6 +105,10 @@ h2 {
 
 main {
   margin: 2rem 0;
+
+  p {
+    line-height: 1.7;
+  }
 }
 
 footer {

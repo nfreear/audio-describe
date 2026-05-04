@@ -8,12 +8,11 @@ const { HTMLElement } = globalThis;
  */
 export default class AudioDescribeControllerElement extends HTMLElement {
   #defaultMediaSelector = 'video, audio, [src *= "vimeo.com"], [src *= "youtube.com"]';
-  #defaultTrackSelector = 'track[ kind = descriptions ][ src ]';
+  #defaultTrackSelector = 'track[ kind = descriptions ][ src ][ srclang ]'; // 'srclang' is required!
   #seadController;
 
   get #mediaSelector () { return this.getAttribute('media-selector') ?? this.#defaultMediaSelector; }
   get #trackSelector () { return this.getAttribute('track-selector') ?? this.#defaultTrackSelector; }
-  // Was: get #srclang () { return this.getAttribute('srclang') ?? 'en'; }
 
   // Was: get #doNotTrack () { return this.hasAttribute('dnt'); }
   get #label () { return this.getAttribute('label') ?? 'Audio description'; }
@@ -33,7 +32,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
 
   #expectations () {
     console.assert(this.#mediaElement, 'Expecting a video, audio, vimeo-video, youtube-video element (or similar)');
-    console.assert(this.#descriptionTrack, 'Expecting at least one <track> element with kind="descriptions"');
+    console.assert(this.#descriptionTrack, 'Expecting at least one <track> element with kind="descriptions", src and srclang attributes');
+    console.assert(this.#descriptionTrack.srclang, 'Expecting <track> element to have a "srclang" attribute')
   }
 
   async connectedCallback () {
