@@ -1,6 +1,6 @@
 {
   "name": "audio-describe",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "type": "module",
   "exports": {
     ".": "./index.js",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "eslint": "^9.39.4",
+    "event-target-shim": "^6.0.2",
     "neostandard": "^0.13.0",
     "servor": "^4.0.2"
   },

@@ -7,42 +7,6 @@
 
 There are two main components of the API: the [`SEADController`](#seadcontroller-class) core class, and the `<audio-describe-controller>` autonomous [custom element][]. The custom element is a wrapper around `SEADController`.
 
-## Custom element example
-
-Below is an example of using the `<audio-describe-controller>` custom element:
-
-```html
-<audio-describe-controller>
-  <video src="path/to/video.mp4" controls>
-    <track kind="descriptions" srclang="en" src="path/to/ext-audio-description.en.vtt">
-  </video>
-</audio-describe-controller>
-```
-
-Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`](#examples-of-supported-mediaelement) below.
-
-### Importmap
-
-```html
-<script type="importmap">
-{
-  "imports": {
-    "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2"
-    "audio-describe": "https://esm.sh/audio-describe"
-  }
-}
-</script>
-```
-
-### Javascript
-
-JavaScript to import and register the custom element:
-```js
-import { AudioDescribeElement } from 'audio-describe';
-
-customElements.define('audio-describe-controller', AudioDescribeElement);
-```
-
 ## `SEADController` class
 
 The core `SEADController` JavaScript class constructor takes an `options` object as its only parameter. After calling the constructor, the `initialize()` method should be called.
@@ -94,6 +58,57 @@ The `mediaElement` property is an instance of any class that extends [`HTMLEleme
 
 Note, in theory any of the custom video elements listed in [muxinc/media-elements][] repository on GitHub should work (_thank you [Mux Inc][]!_). They have _not_ been tested, except for the ones listed above.
 
+## `<audio-describe-controller>` custom element
+
+Below is an example of using the `<audio-describe-controller>` custom element:
+
+```html
+<audio-describe-controller>
+  <video src="path/to/video.mp4" controls>
+    <track kind="descriptions" srclang="en" src="path/to/ext-audio-description.en.vtt">
+  </video>
+</audio-describe-controller>
+```
+
+### Required child elements
+
+The `<audio-describe-controller>` custom element has two required child elements:
+
+* A `<video>` element, or another element that fulfills the [`mediaElement` requirements](#mediaelement-property).
+* A `<track>` element, with a `kind` value of `descriptions` and `src` and `srclang` attributes.
+
+Other elements can be substituted in place of `<video>` — see [Examples of supported `mediaElement`](#examples-of-supported-mediaelement) above.
+
+### Optional attributes
+
+The `<audio-describe-controller>` custom element has no required attributes. It has the following optional attributes:
+
+* `media-selector` — A CSS selector to get the child `mediaElement`.
+* `track-selector` — A CSS selector to get the child `<track>` element.
+
+### Importmap
+
+```html
+<script type="importmap">
+{
+  "imports": {
+    "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2"
+    "audio-describe": "https://esm.sh/audio-describe"
+  }
+}
+</script>
+```
+
+### Javascript
+
+JavaScript to import and register the custom element:
+```js
+import { AudioDescribeElement } from 'audio-describe';
+
+customElements.define('audio-describe-controller', AudioDescribeElement);
+```
+
+---
 ←[Readme][]
 
 [Readme]: https://github.com/nfreear/audio-describe#readme
