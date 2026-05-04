@@ -33,7 +33,7 @@ export default class AudioDescribeControllerElement extends HTMLElement {
   #expectations () {
     console.assert(this.#mediaElement, 'Expecting a video, audio, vimeo-video, youtube-video element (or similar)');
     console.assert(this.#descriptionTrack, 'Expecting at least one <track> element with kind="descriptions", src and srclang attributes');
-    console.assert(this.#descriptionTrack.srclang, 'Expecting <track> element to have a "srclang" attribute')
+    console.assert(this.#descriptionTrack.srclang, 'Expecting <track> element to have a "srclang" attribute');
   }
 
   async connectedCallback () {
