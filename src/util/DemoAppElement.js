@@ -10,6 +10,7 @@ const { customElements, HTMLElement, location } = globalThis;
  * @copyright Nick Freear, 12-April-2026.
  */
 export default class DemoAppElement extends HTMLElement {
+  #localVttImport = '../../vtt-data/index.js';
   #videoData;
   #result;
 
@@ -21,6 +22,9 @@ export default class DemoAppElement extends HTMLElement {
     const params = new URLSearchParams(location.search);
     return params.get('q') ?? this.#defaultId;
   }
+
+  get #queryLocalVtt () { return new URLSearchParams(location.search).has('local'); }
+  get #videoDataSrc () { return this.getAttribute('data-src') ?? this.#localVttImport; }
 
   get #alertElement () { return this.querySelector('[ role = alert ]'); }
   get #trackElement () { return this.querySelector('track[ kind = descriptions ]'); }
@@ -35,12 +39,13 @@ export default class DemoAppElement extends HTMLElement {
     console.assert(this.#trackElement, 'Missing track element');
     console.assert(this.#mediaElement, 'Missing media element');
     console.assert(this.#voiceSelectElement, 'Missing voice-select');
+    console.assert(this.#alertElement, 'Missing alert element');
     console.assert(this.#result, 'Missing media entry');
   }
 
   #handleNotFoundError () {
     console.assert(this.#alertElement, 'Missing alert element');
-    console.error(`Error. Video not found: "${this.#query}"`);
+    console.error(`App Error. Video not found: "${this.#query}"`);
     this.dataset.error = 'not-found';
     document.documentElement.dataset.error = 'app:not-found';
     this.#alertElement.textContent = `Error. Video not found: "${this.#query}"`;
@@ -56,8 +61,8 @@ export default class DemoAppElement extends HTMLElement {
   }
 
   async connectedCallback () {
-    await this.#importFindVideo();
-    if (!this.#result) {
+    await this.#importVideoData();
+    if (!this.#findVideo()) {
       return this.#handleNotFoundError();
     }
     this.#expectations();
@@ -84,13 +89,20 @@ export default class DemoAppElement extends HTMLElement {
     return lang === 'en' ? 'en-(gb|ie|au)' : lang;
   }
 
-  async #importFindVideo () {
+  async #importVideoData () {
     let allData = videoData;
     if (this.#vendorVtt) {
       const { default: vendorData } = await import('vtt-data');
       allData = [...vendorData, ...videoData];
     }
+    if (this.#queryLocalVtt) {
+      const { default: localData } = await import(this.#videoDataSrc);
+      allData = [...localData, ...videoData];
+    }
     this.#videoData = allData;
+  }
+
+  #findVideo () {
     this.#result = this.#videoData.find((it) => it.id === this.#query);
     return this.#result;
   }
