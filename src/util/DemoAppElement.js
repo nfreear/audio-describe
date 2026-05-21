@@ -3,6 +3,13 @@ import videoData from './videoData.js';
 
 const { customElements, HTMLElement, location } = globalThis;
 
+export class AppNotFoundError extends Error {
+  constructor (query) {
+    super(`App Error. Video data not found: "${query}"`);
+    this.name = 'AppNotFoundError';
+  }
+}
+
 /**
  * Demo app, optionally using a URL query parameter.
  *
@@ -10,6 +17,7 @@ const { customElements, HTMLElement, location } = globalThis;
  * @copyright Nick Freear, 12-April-2026.
  */
 export default class DemoAppElement extends HTMLElement {
+  #errorEvent = 'sead-error';
   #localVttImport = '../../vtt-data/index.js';
   #videoData;
   #result;
@@ -43,12 +51,16 @@ export default class DemoAppElement extends HTMLElement {
     console.assert(this.#result, 'Missing media entry');
   }
 
-  #handleNotFoundError () {
+  #handleError (error) {
     console.assert(this.#alertElement, 'Missing alert element');
-    console.error(`App Error. Video not found: "${this.#query}"`);
-    this.dataset.error = 'not-found';
-    document.documentElement.dataset.error = 'app:not-found';
-    this.#alertElement.textContent = `Error. Video not found: "${this.#query}"`;
+    console.assert(error instanceof Error, 'Expecting Error instance');
+    console.error(error);
+    const { message, name, status } = error;
+    this.dataset.error = name;
+    this.dataset.errorMessage = message;
+    if (status) { this.dataset.errorStatus = status; }
+    document.documentElement.dataset.error = name;
+    this.#alertElement.textContent = message;
   }
 
   async #importVendorLibs () {
@@ -61,9 +73,11 @@ export default class DemoAppElement extends HTMLElement {
   }
 
   async connectedCallback () {
+    this.addEventListener(this.#errorEvent, ({ error }) => this.#handleError(error));
+
     await this.#importVideoData();
     if (!this.#findVideo()) {
-      return this.#handleNotFoundError();
+      return this.#handleError(new AppNotFoundError(this.#query));
     }
     this.#expectations();
 

@@ -1,5 +1,19 @@
 import { parse } from '@plussub/srt-vtt-parser';
 
+export class VttFetchError extends Error {
+  #response;
+  get response () { return this.#response; }
+  get status () { return this.#response.status; }
+  get url () { return this.#response.url; }
+  constructor (response) {
+    console.assert(response instanceof Response, 'Expecting Response');
+    const { status, statusText, url } = response;
+    super(`Fetch Error: ${statusText} (VTT) ~ ${url} (http:${status})`);
+    this.name = 'VttFetchError';
+    this.#response = response;
+  }
+}
+
 /**
  * Fetch and parse a WebVTT file, optionally containing JSON meta-data.
  *
@@ -14,9 +28,11 @@ export default class MetaVttParser {
   async fetchAndParse (resource, options) {
     const { fetch } = globalThis;
 
-    this.#response = await fetch(resource, options);
+    const resp = this.#response = await fetch(resource, options);
+    if (!resp.ok) {
+      throw new VttFetchError(resp);
+    }
     const rawVTT = await this.#response.text();
-    // console.debug('Response:', response);
     return this.parse(rawVTT);
   }
 

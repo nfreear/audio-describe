@@ -2,6 +2,16 @@ import SEADController from '../ExAudioDescriptionPlayer.js';
 
 const { HTMLElement } = globalThis;
 
+export class SEADErrorEvent extends Event {
+  #error;
+  get error () { return this.#error; }
+  constructor (error) {
+    console.assert(error instanceof Error, 'Expecting Error');
+    super('sead-error', { bubbles: true, composed: true });
+    this.#error = error;
+  }
+}
+
 /**
  * Autonomous custom element wrapper around SEADController.
  * @customElement audio-describe-controller
@@ -53,9 +63,20 @@ export default class AudioDescribeControllerElement extends HTMLElement {
       trackLang: this.#descriptionTrack.srclang
     });
 
-    await this.#seadController.initialize();
+    try {
+      await this.#seadController.initialize();
+    } catch (error) {
+      this.#handleError(error);
+    }
 
     console.debug('audio-describe-controller:', [this]);
+  }
+
+  #handleError (error) {
+    console.error(error);
+    this.dataset.error = error.name;
+    this.dispatchEvent(new SEADErrorEvent(error));
+    // throw error;
   }
 
   #createElements () {
