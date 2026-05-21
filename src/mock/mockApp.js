@@ -4,13 +4,10 @@ import SEADController, { VoiceSelectElement } from '../../index.js';
 export default async function mockWebApp (durationSeconds = 20) {
   window.customElements.define('voice-select', VoiceSelectElement);
 
-  const trackUrl = import.meta.resolve('../../tracks/example.ext-ad.en.vtt');
-  const appElem = document.querySelector('#mock-app');
-  const playButton = appElem.querySelector('button');
-  const outputElem = appElem.querySelector('output');
-  const checkBox = appElem.querySelector('[type = checkbox]');
-
   const mockElement = new MockMediaElement(durationSeconds);
+
+  const trackUrl = import.meta.resolve('../../tracks/example.ext-ad.en.vtt');
+  const { playButton, outputElem, checkBox } = mockAppElements();
 
   const seadController = new SEADController({
     mediaElement: mockElement,
@@ -51,6 +48,16 @@ export default async function mockWebApp (durationSeconds = 20) {
   });
 
   console.debug('mock-app:', mockElement, seadController);
+}
+
+export function mockAppElements (appCssSelector = '#mock-app') {
+  const appElem = document.querySelector(appCssSelector);
+  console.assert(appElem, 'Missing app element');
+  const playButton = appElem.querySelector('button');
+  const outputElem = appElem.querySelector('output');
+  const checkBox = appElem.querySelector('[ type = checkbox ]');
+
+  return { appElem, playButton, outputElem, checkBox };
 }
 
 export { MockMediaElement, mockWebApp };

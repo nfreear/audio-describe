@@ -36,7 +36,7 @@ The `options` object has the following required properties:
 
 ### `mediaElement` property
 
-The `mediaElement` property is an instance of any class that extends [`HTMLElement`][HTMLElement], and supports a subset of the [`HTMLMediaElement`][HTMLMediaElement] API, as follows:
+The `mediaElement` property is an instance of any class that extends [`HTMLElement`][HTMLElement] or extends/implements [`EventTarget`][EventTarget], and supports a subset of the [`HTMLMediaElement`][HTMLMediaElement] API, as follows:
 
 #### Methods
 * [`addEventListener()`][addEventListener] — Register an event handler.
@@ -44,7 +44,7 @@ The `mediaElement` property is an instance of any class that extends [`HTMLEleme
 * [`undefined pause()`][pause] — Pause the video.
 
 #### Properties
-* [`double currentTime`][currentTime] — "A double-precision floating-point value indicating the current playback time in seconds;…" (often a _getter_)
+* [`double currentTime`][currentTime] — "A double-precision floating-point value indicating the current playback time in seconds;…" (often a [getter][])
 
 #### Events
 * [`timeupdate`][timeupdate] — "The current playback position changed as part of normal playback or…" (dispatched on `this`).
@@ -54,7 +54,8 @@ The `mediaElement` property is an instance of any class that extends [`HTMLEleme
 * [`<video>`][video] — The native HTML5 video element — [video demo][].
 * [`<vimeo-video>`][vimeo-video] — "A custom element for the Vimeo player with an API that matches the `<video>` API" — [Vimeo demo][].
 * [`<youtube-video>`][youtube-video] — "A custom element for the YouTube player with an API that matches the `<video>` API" — [YouTube demo][].
-* [`<videojs-video`][videojs-video] — _(Work-in-progress)_ "A custom element for Video.js with an API that matches the `<video>` API" — [Video.js demo][].
+* [`<videojs-video>`][videojs-video] — _(Work-in-progress)_ "A custom element for Video.js with an API that matches the `<video>` API" — [Video.js demo][].
+* [`MockMediaElement`][MockMediaElement] — A minimal class that fulfills the API requirements for a `mediaElement` (Uses [event-target-shim][]) — [Mock demo][].
 
 Note, in theory any of the custom video elements listed in [muxinc/media-elements][] repository on GitHub should work (_thank you [Mux Inc][]!_). They have _not_ been tested, except for the ones listed above.
 
@@ -133,6 +134,7 @@ customElements.define('audio-describe-controller', AudioDescribeElement);
 [currentTime]: https://html.spec.whatwg.org/multipage/media.html#dom-media-currenttime
 [mdn:currentTime]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
 [timeupdate]: https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
+[getter]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
 [videojs-video]: https://www.media-chrome.org/docs/en/media-elements/videojs-video
 [vimeo-video]: https://www.media-chrome.org/docs/en/media-elements/vimeo-video
 [youtube-video]: https://www.media-chrome.org/docs/en/media-elements/youtube-video
@@ -147,3 +149,6 @@ customElements.define('audio-describe-controller', AudioDescribeElement);
 [vimeo demo]: https://nfreear.github.io/audio-describe/demo/vimeo.html
 [video.js demo]: https://nfreear.github.io/audio-describe/demo/videojs.html
 [mock demo]: https://nfreear.github.io/audio-describe/demo/mock.html
+
+[MockMediaElement]: https://github.com/nfreear/audio-describe/blob/main/src/mock/MockMediaElement.js
+[event-target-shim]: https://github.com/mysticatea/event-target-shim

@@ -23,10 +23,10 @@ export default class MockMediaElement extends EventTarget {
 
   async play () {
     if (this.ended) {
-      return Promise.reject(new Error('Error: already ended.'));
+      return Promise.reject(new Error('Already ended.'));
     }
     if (!this.paused) {
-      return Promise.reject(new Error('Error: already playing.'));
+      return Promise.reject(new Error('Already playing.'));
     }
     this.#intervalID = setInterval(() => this.#onInterval(), this.#intervalMS);
 
