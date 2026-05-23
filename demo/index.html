@@ -24,7 +24,9 @@
 
 <voice-select locale="en-(gb|ie|au)">Loading voices…</voice-select>
 
-<audio-describe-controller media-selector="video">
+<push-button commandfor="sead_1" initial="true">Audio description</push-button>
+
+<audio-describe-controller controls media-selector="video" id="sead_1">
   <media-controller>
     <video crossorigin slot="media" X_controls >
       <track kind="descriptions" srclang="en" src >

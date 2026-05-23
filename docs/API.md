@@ -84,8 +84,13 @@ Other elements can be substituted in place of `<video>` — see [Examples of sup
 
 The `<audio-describe-controller>` custom element has no required attributes. It has the following optional attributes:
 
+* `controls` — Add checkbox to enable/disable audio description (in Shadow DOM).
 * `media-selector` — A CSS selector to get the child `mediaElement`.
 * `track-selector` — A CSS selector to get the child `<track>` element.
+
+### `CommandEvent`
+
+Audio description can be enabled/disabled by dispatching a [`CommandEvent`][CommandEvent] on `<audio-describe-controller>` with a `command` property of `--on` (enable) or `--off` (disable).
 
 ### Importmap
 
@@ -122,6 +127,7 @@ customElements.define('audio-describe-controller', AudioDescribeElement);
 [custom element]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 [EventTarget]: https://dom.spec.whatwg.org/#eventtarget
 [addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+[CommandEvent]: https://developer.mozilla.org/en-US/docs/Web/API/CommandEvent
 [video]: https://html.spec.whatwg.org/multipage/media.html#the-video-element
 [mdn:video]: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video
 [HTMLElement]: https://html.spec.whatwg.org/multipage/dom.html#htmlelement

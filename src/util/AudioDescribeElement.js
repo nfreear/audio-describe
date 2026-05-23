@@ -20,7 +20,9 @@ export default class AudioDescribeControllerElement extends HTMLElement {
   #defaultMediaSelector = 'video, audio, [src *= "vimeo.com"], [src *= "youtube.com"]';
   #defaultTrackSelector = 'track[ kind = descriptions ][ src ][ srclang ]'; // 'srclang' is required!
   #seadController;
+  #isEnabled = true;
 
+  get #controls () { return this.hasAttribute('controls'); }
   get #mediaSelector () { return this.getAttribute('media-selector') ?? this.#defaultMediaSelector; }
   get #trackSelector () { return this.getAttribute('track-selector') ?? this.#defaultTrackSelector; }
 
@@ -48,15 +50,10 @@ export default class AudioDescribeControllerElement extends HTMLElement {
 
   async connectedCallback () {
     this.#expectations();
-
-    const root = this.attachShadow({ mode: 'open' });
-    const { slot, label, checkbox } = this.#createElements();
-
-    root.appendChild(label);
-    root.appendChild(slot);
+    this.#createControls();
 
     this.#seadController = new SEADController({
-      isEnabledCallback: () => checkbox.checked, // Evaluate each time "timeupdate" event is fired.
+      isEnabledCallback: () => this.#isEnabled, // Was: checkbox.checked, // Evaluate each time "timeupdate" event is fired.
       onStateChange: (event) => this.#onStateChange(event),
       mediaElement: this.#mediaElement,
       trackUrl: this.#descriptionTrack.src,
@@ -69,6 +66,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
       this.#handleError(error);
     }
 
+    this.addEventListener('command', (ev) => this.#onCommandEvent(ev));
+
     console.debug('audio-describe-controller:', [this]);
   }
 
@@ -77,6 +76,17 @@ export default class AudioDescribeControllerElement extends HTMLElement {
     this.dataset.error = error.name;
     this.dispatchEvent(new SEADErrorEvent(error));
     // throw error;
+  }
+
+  #createControls () {
+    if (this.#controls) {
+      const root = this.attachShadow({ mode: 'open' });
+      const { slot, label, checkbox } = this.#createElements();
+      this.#checkboxEvent(checkbox);
+
+      root.appendChild(label);
+      root.appendChild(slot);
+    }
   }
 
   #createElements () {
@@ -102,5 +112,24 @@ export default class AudioDescribeControllerElement extends HTMLElement {
     const { state } = event;
     this.dataset.extState = state;
     console.debug('>> onStateChange ~ ext AD:', state, event);
+  }
+
+  #checkboxEvent (cbElem) {
+    cbElem.addEventListener('change', () => { this.#isEnabled = cbElem.checked; });
+  }
+
+  #onCommandEvent (event) {
+    const { command } = event;
+    switch (command) {
+      case '--on':
+        this.#isEnabled = true;
+        break;
+      case '--off':
+        this.#isEnabled = false;
+        break;
+      default:
+        throw new Error(`Unexpected command: ${command}`);
+    }
+    console.debug('command:', command, event);
   }
 }

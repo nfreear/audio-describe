@@ -1,4 +1,5 @@
 import { AudioDescribeElement, VoiceSelectElement } from '../../index.js';
+import PushButtonElement from './PushButtonElement.js';
 import videoData from './videoData.js';
 
 const { customElements, HTMLElement, location } = globalThis;
@@ -86,15 +87,19 @@ export default class DemoAppElement extends HTMLElement {
     this.#mediaElement.setAttribute('src', this.#result.mediaUrl);
     this.#voiceSelectElement.setAttribute('locale', this.#voiceSelectLocale);
 
-    customElements.define('voice-select', VoiceSelectElement);
-
     await this.#importVendorLibs();
 
-    customElements.define('audio-describe-controller', AudioDescribeElement);
+    this.#defineCustomElements();
 
     this.dataset.trackLang = this.#result.language;
 
     console.debug('demo-app:', [this]);
+  }
+
+  #defineCustomElements () {
+    customElements.define('push-button', PushButtonElement);
+    customElements.define('voice-select', VoiceSelectElement);
+    customElements.define('audio-describe-controller', AudioDescribeElement);
   }
 
   get #voiceSelectLocale () {

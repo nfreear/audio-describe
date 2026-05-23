@@ -71,6 +71,24 @@ voice-select {
   padding: .3rem .5rem;
 }
 
+push-button {
+  &::part(button):before {
+    border: var(--push-button-icon-border, 1px solid gray);
+    border-radius: .2rem;
+    content: '' / '';
+    display: inline-block;
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-right: .3rem;
+    vertical-align: middle;
+  }
+
+  &::part(true):before {
+    content: var(--push-button-char, '✔') / '';
+    color: var(--push-button-icon-color, darkred);
+  }
+}
+
 [ data-error ] {
   [ role = alert ] {
     background-color: #fee;
