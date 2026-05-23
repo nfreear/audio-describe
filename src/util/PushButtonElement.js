@@ -1,5 +1,9 @@
 const { CommandEvent, HTMLElement } = globalThis;
 
+const commands = {
+  off: '--off', on: '--on', regex: /--o(ff|n)/
+};
+
 /**
  * @customElement push-button
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API
@@ -10,8 +14,8 @@ export default class PushButtonElement extends HTMLElement {
   // #initial = false;
   #button;
 
-  get #command () { return this.getAttribute('command') ?? '--on'; }
-  get #commandOff () { return this.getAttribute('command-off') ?? '--off'; }
+  get #command () { return this.getAttribute('command') ?? commands.on; }
+  get #commandOff () { return this.getAttribute('command-off') ?? commands.off; }
 
   get #commandForElement () {
     const commandForID = this.getAttribute('commandfor');
@@ -62,3 +66,11 @@ export default class PushButtonElement extends HTMLElement {
     return cmdEvent;
   }
 }
+
+function isOnCommand (event) {
+  const { command } = event;
+  console.assert(commands.regex.test(command), `Unexpected command: ${command}`);
+  return command === commands.on;
+}
+
+export { commands, isOnCommand, PushButtonElement };

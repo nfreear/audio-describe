@@ -4,6 +4,7 @@
   "type": "module",
   "exports": {
     ".": "./index.js",
+    "./util": "./src/util.js",
     "./vtt-parser": "./src/MetaVttParser.js",
     "./voice-select": "./src/util/VoiceSelectElement.js",
     "./data": "./src/util/videoData.js",

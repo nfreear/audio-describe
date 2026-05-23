@@ -1,13 +1,14 @@
 import MockMediaElement from './MockMediaElement.js';
-import SEADController, { VoiceSelectElement } from '../../index.js';
+import SEADController from '../../index.js';
+import { defineCustomElements, isOnCommand } from '../util.js';
 
 export default async function mockWebApp (durationSeconds = 20) {
-  window.customElements.define('voice-select', VoiceSelectElement);
+  defineCustomElements();
 
   const mockElement = new MockMediaElement(durationSeconds);
 
   const trackUrl = import.meta.resolve('../../tracks/example.ext-ad.en.vtt');
-  const { playButton, outputElem, checkBox } = mockAppElements();
+  const { playButton, outputElem } = mockAppElements();
 
   const seadController = new SEADController({
     mediaElement: mockElement,
@@ -20,17 +21,19 @@ export default async function mockWebApp (durationSeconds = 20) {
   await seadController.initialize();
 
   playButton.addEventListener('click', async (ev) => {
-    if (mockElement.paused) {
+    const METHOD = mockElement.paused ? 'play' : 'pause';
+
+    await mockElement[METHOD]();
+    /* WAS: if (mockElement.paused) {
       await mockElement.play();
     } else {
       mockElement.pause();
-    }
+    } */
   });
 
-  checkBox.addEventListener('change', (ev) => {
-    const { checked } = ev.target;
-    outputElem.setAttribute('aria-live', checked ? 'polite' : 'off');
-    console.debug('live region change:', checked, ev);
+  outputElem.addEventListener('command', (ev) => {
+    outputElem.setAttribute('aria-live', isOnCommand(ev) ? 'polite' : 'off');
+    console.debug('live region change:', ev.command, ev);
   });
 
   mockElement.addEventListener('timeupdate', (ev) => {

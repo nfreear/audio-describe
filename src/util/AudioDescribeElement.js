@@ -1,4 +1,5 @@
 import SEADController from '../ExAudioDescriptionPlayer.js';
+import { isOnCommand } from './PushButtonElement.js';
 
 const { HTMLElement } = globalThis;
 
@@ -120,7 +121,8 @@ export default class AudioDescribeControllerElement extends HTMLElement {
 
   #onCommandEvent (event) {
     const { command } = event;
-    switch (command) {
+    this.#isEnabled = isOnCommand(event);
+    /* switch (command) {
       case '--on':
         this.#isEnabled = true;
         break;
@@ -129,7 +131,7 @@ export default class AudioDescribeControllerElement extends HTMLElement {
         break;
       default:
         throw new Error(`Unexpected command: ${command}`);
-    }
+    } */
     console.debug('command:', command, event);
   }
 }

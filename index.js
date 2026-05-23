@@ -9,11 +9,9 @@ import SEADController from './src/ExAudioDescriptionPlayer.js';
 import SynthAudioDescriber from './src/SynthAudioDescriber.js';
 import MetaVttParser from './src/MetaVttParser.js';
 import AudioDescribeElement from './src/util/AudioDescribeElement.js';
-import VoiceSelectElement from './src/util/VoiceSelectElement.js';
 
 export {
-  MetaVttParser, SynthAudioDescriber,
-  AudioDescribeElement, VoiceSelectElement, SEADController
+  MetaVttParser, SynthAudioDescriber, AudioDescribeElement, SEADController
 };
 
 export default SEADController;

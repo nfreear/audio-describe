@@ -1,8 +1,6 @@
-import { AudioDescribeElement, VoiceSelectElement } from '../../index.js';
-import PushButtonElement from './PushButtonElement.js';
-import videoData from './videoData.js';
+import { defineCustomElements, videoData } from '../util.js';
 
-const { customElements, HTMLElement, location } = globalThis;
+const { HTMLElement, location } = globalThis;
 
 export class AppNotFoundError extends Error {
   constructor (query) {
@@ -89,17 +87,11 @@ export default class DemoAppElement extends HTMLElement {
 
     await this.#importVendorLibs();
 
-    this.#defineCustomElements();
+    defineCustomElements();
 
     this.dataset.trackLang = this.#result.language;
 
     console.debug('demo-app:', [this]);
-  }
-
-  #defineCustomElements () {
-    customElements.define('push-button', PushButtonElement);
-    customElements.define('voice-select', VoiceSelectElement);
-    customElements.define('audio-describe-controller', AudioDescribeElement);
   }
 
   get #voiceSelectLocale () {
