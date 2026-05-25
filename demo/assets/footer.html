@@ -4,13 +4,16 @@
       a[ href ] {
         color: var(--link-color);
       }
+      ul, li {
+        line-height: 1.9;
+      }
     </style>
     <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
     <details>
-      <summary>More demos</summary>
-      <nav>
+      <summary id="labelID">More demos</summary>
+      <nav aria-labelledby="labelID">
         <ul>
-          <li><a href="./">Home</a>
+          <li><a href="./" aria-current="page">Home</a>
           <li><a href="mock.html">Mock</a>
           <li><a href="vimeo.html">Vimeo</a>
           <li><a href="youtube.html">YouTube</a>
