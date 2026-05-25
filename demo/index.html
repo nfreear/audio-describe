@@ -26,7 +26,7 @@
 
 <push-button commandfor="sead_1" initial="true">Audio description</push-button>
 
-<audio-describe-controller controls media-selector="video" id="sead_1">
+<audio-describe-controller X_controls media-selector="video" id="sead_1">
   <media-controller>
     <video crossorigin slot="media" X_controls >
       <track kind="descriptions" srclang="en" src >
@@ -45,9 +45,9 @@
 
 </main>
 
-<footer>
-  <p>About & code: <a href="https://github.com/nfreear/audio-describe#readme">@nfreear/audio-describe</a></p>
-</footer>
+<my-include>
+  <iframe src="assets/footer.html"></iframe>
+</my-include>
 
 
 <script type="importmap">
@@ -55,6 +55,7 @@
   "imports": {
     "media-chrome": "https://cdn.jsdelivr.net/npm/media-chrome@4/+esm",
     "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
+    "ndf-elements/my-include": "https://nfreear.github.io/elements/src/components/MyIncludeElement.js",
     "vtt-data": "https://nfreear.github.io/vtt-data/index.js"
   }
 }

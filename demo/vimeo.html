@@ -38,7 +38,7 @@
   "imports": {
     "vimeo-video-element": "https://cdn.jsdelivr.net/npm/vimeo-video-element@1.1/+esm",
     "@plussub/srt-vtt-parser": "https://esm.sh/@plussub/srt-vtt-parser@^2",
-    "audio-describe": "../index.js"
+    "audio-describe/util": "../src/util.js"
   }
 }
 </script>
@@ -46,10 +46,9 @@
 
 <script type="module">
   import 'vimeo-video-element';
-  import { AudioDescribeElement, VoiceSelectElement } from 'audio-describe';
+  import { defineCustomElements } from 'audio-describe/util';
 
-  customElements.define('audio-describe-controller', AudioDescribeElement);
-  customElements.define('voice-select', VoiceSelectElement);
+  defineCustomElements();
 </script>
 
 </html>

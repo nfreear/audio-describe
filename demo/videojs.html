@@ -25,20 +25,10 @@
 
 <audio-describe-controller controls media-selector="videojs-video">
   <media-controller>
-    <videojs-video
-      X_src="https://stream.mux.com/OfjbQ3esQifgboENTs4oDXslCP5sSnst/high.mp4"
-      X_src="https://www.youtube.com/watch?v=HgHj3g68Tr4"
-      crossorigin
-      controls >
-    <track kind="descriptions" srclang="en" X_src="../tracks/mux-pour-coffee.ext-ad.en.vtt">
-    <p>Loading video…</p>
+    <videojs-video crossorigin controls>
+      <track kind="descriptions">
+      <p>Loading video…</p>
     </videojs-video>
-    <media-control-bar>
-      <media-play-button></media-play-button>
-      <media-mute-button></media-mute-button>
-      <media-time-range></media-time-range>
-      <media-time-display showduration remaining></media-time-display>
-    </media-control-bar>
   </media-controller>
 </audio-describe-controller>
 
@@ -56,6 +46,7 @@
   "imports": {
     "videojs-video-element": "https://cdn.jsdelivr.net/npm/videojs-video-element@1.2/+esm",
     "@plussub/srt-vtt-parser": "https://unpkg.com/@plussub/srt-vtt-parser@^2/dist/index.js",
+    "ndf-elements/my-include": "https://nfreear.github.io/elements/src/components/MyIncludeElement.js",
     "vtt-data": "https://nfreear.github.io/vtt-data/index.js"
   }
 }
