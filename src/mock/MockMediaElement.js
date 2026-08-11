@@ -14,7 +14,7 @@ export default class MockMediaElement extends EventTarget {
 
   constructor (durationSeconds = 30) {
     super();
-    this.#duration = durationSeconds;
+    this.#duration = parseInt(durationSeconds);
   }
 
   get currentTime () { return parseFloat(this.#count * this.#intervalMS / 1000); }

@@ -2,6 +2,9 @@ import MockMediaElement from './MockMediaElement.js';
 import SEADController from '../../index.js';
 import { defineCustomElements, isOnCommand } from '../util.js';
 
+/**
+ * A demo app using `MockMediaElement`.
+ */
 export default async function mockWebApp (durationSeconds = 20) {
   defineCustomElements();
 
@@ -24,11 +27,6 @@ export default async function mockWebApp (durationSeconds = 20) {
     const METHOD = mockElement.paused ? 'play' : 'pause';
 
     await mockElement[METHOD]();
-    /* WAS: if (mockElement.paused) {
-      await mockElement.play();
-    } else {
-      mockElement.pause();
-    } */
   });
 
   outputElem.addEventListener('command', (ev) => {
