@@ -1,0 +1,48 @@
+<svg viewBox="0 0 237 62" xmlns="http://www.w3.org/2000/svg">
+  <title>SEAD</title>
+
+  <style>
+    rect {
+      fill: #000;
+    }
+
+    text {
+      dominant-baseline: middle; /* vertical */
+      text-anchor: middle;
+
+      fill: #fff;
+      font-family: Arial,sans-serif;
+      font-size: 66px;
+
+      white-space: collapse;
+    }
+
+    .se {
+      font-weight: 200;
+      letter-spacing: -1.5px;
+    }
+
+    .ad {
+      font-weight: 700;
+    }
+
+    .a {
+      font-style: italic;
+    }
+
+    .bracket {
+      font-size: 50px;
+      letter-spacing: -1px;
+    }
+  </style>
+
+  <rect x="0" y="0" height="100%" width="100%"/>
+
+  <text x="50%" y="50%" class="text">
+    <tspan class="sead"><tspan class="se">SE</tspan><tspan class="ad"><tspan class="a">A</tspan>D</tspan></tspan>
+    <tspan
+      dx="-9%" dy="-11%" x_x="183" x_y="42"
+      class="bracket"
+    >)))</tspan>
+  </text>
+</svg>

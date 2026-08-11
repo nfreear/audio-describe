@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<!--
-  Source: https://commons.wikimedia.org/wiki/File:Pictograms-nps-accessibility-audio_description.svg
-  Source: http://www.nps.gov/hfc/carto/map-symbols.htm
-  Archive: https://web.archive.org/web/20100211113238/http://www.nps.gov/hfc/carto/map-symbols.htm#
-  Archive PDF: https://web.archive.org/web/20100216192550/http://www.nps.gov/hfc/carto/symbols/other_symbols.pdf
-  License: Public Domain (USA)
--->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -24,6 +17,15 @@
    sodipodi:docname="pictograms-nps-accessibility-audio_description.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <title>Audio Description (AD)</title>
+
+  <desc>
+    Source: https://commons.wikimedia.org/wiki/File:Pictograms-nps-accessibility-audio_description.svg
+    Original: http://www.nps.gov/hfc/carto/map-symbols.htm
+    Archive: https://web.archive.org/web/20100211113238/http://www.nps.gov/hfc/carto/map-symbols.htm#
+    Archive PDF: https://web.archive.org/web/20100216192550/http://www.nps.gov/hfc/carto/symbols/other_symbols.pdf
+    License: Public Domain (USA)
+  </desc>
+
   <defs
      id="defs5296">
     <inkscape:perspective
@@ -66,11 +68,25 @@
     </rdf:RDF>
   </metadata>
 
-  <style>
-  #_path3872 {
-    fill: red !important;
-  }
-  </style>
+  <defs>
+    <style>
+    .background,
+    .border {
+      fill: #000;
+    }
+
+    .foreground,
+    .outer-background {
+      fill: #fff;
+    }
+
+    * {
+      fill-opacity: 1;
+      fill-rule: nonzero;
+      stroke: none;
+    }
+    </style>
+  </defs>
 
   <g
      inkscape:label="Layer 1"
@@ -82,7 +98,7 @@
       <!-- Outer black border -->
       <path
          d="M 0,0 C -0.652,0 -1.182,0.529 -1.182,1.184 L -1.182,8.707 C -1.182,9.359 -0.652,9.889 0,9.889 L 7.527,9.889 C 8.18,9.889 8.709,9.359 8.709,8.707 L 8.709,1.184 C 8.709,0.529 8.18,0 7.527,0 L 0,0 z"
-         style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="border"
          id="path3840" />
     </g>
     <g
@@ -91,16 +107,17 @@
       <!-- White background -->
       <path
          d="M 0,0 C -0.541,0 -0.98,-0.441 -0.98,-0.982 L -0.98,-8.506 C -0.98,-9.047 -0.541,-9.488 0,-9.488 L 7.527,-9.488 C 8.07,-9.488 8.51,-9.047 8.51,-8.506 L 8.51,-0.982 C 8.51,-0.441 8.07,0 7.527,0 L 0,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="outer-background"
          id="path3844" />
     </g>
+
     <g
        id="g3846"
        transform="matrix(25.882115,0,0,-25.882115,60.973294,203.82911)">
       <!-- Black inset background -->
       <path
          d="M 0,0 C -0.795,0 -1.439,1.314 -1.439,2.936 C -1.439,4.557 -0.795,5.871 0,5.871 L 5.133,5.871 C 5.928,5.871 6.572,4.557 6.572,2.936 C 6.572,1.314 5.928,0 5.133,0 L 0,0 z"
-         style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="background inset"
          id="path3848" />
     </g>
     <g
@@ -109,7 +126,7 @@
       <!-- Letter "D" -->
       <path
          d="M 0,0 C 0.381,0 0.688,-0.309 0.688,-0.688 C 0.688,-1.068 0.381,-1.377 0,-1.377 L -0.18,-1.377 L -0.18,0 L 0,0 z M 0.07,-1.979 C 0.783,-1.979 1.363,-1.4 1.363,-0.688 C 1.363,0.027 0.789,0.605 0.076,0.605 L 0.068,0.605 L -0.723,0.605 L -0.723,-1.98 L 0.07,-1.98"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="foreground letter-D"
          id="path3852" />
     </g>
     <g
@@ -118,7 +135,7 @@
       <!-- Letter "A" -->
       <path
          d="M 0,0 L -0.566,0 L -0.566,0.342 L -1.514,0.342 L -1.732,0 L -2.563,0 L -0.707,2.586 L 0,2.586 L 0,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="foreground letter-A"
          id="path3856" />
     </g>
     <g
@@ -127,7 +144,7 @@
       <!-- Triangle inside "A" -->
       <path
          d="M 0,0 L -0.596,0 L 0,0.926 L 0,0 z"
-         style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="background triangle-A"
          id="path3860" />
     </g>
     <g
@@ -136,7 +153,7 @@
       <!-- Right-most white ")" bracket -->
       <path
          d="M 0,0 L -0.082,0 L -0.236,0 L -0.318,0 C 0.041,-0.357 0.248,-0.846 0.248,-1.354 C 0.248,-1.805 0.086,-2.236 -0.201,-2.578 L -0.119,-2.578 L 0.021,-2.578 L 0.104,-2.578 C 0.359,-2.227 0.502,-1.797 0.502,-1.354 C 0.502,-0.855 0.32,-0.375 0,0"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="foreground right bracket"
          id="path3864" />
     </g>
     <g
@@ -145,7 +162,7 @@
       <!-- Middle white ")" bracket -->
       <path
          d="M 0,0 L -0.082,0 L -0.236,0 L -0.318,0 C 0.041,-0.357 0.248,-0.846 0.248,-1.354 C 0.248,-1.805 0.086,-2.236 -0.201,-2.578 L -0.119,-2.578 L 0.021,-2.578 L 0.102,-2.578 C 0.359,-2.227 0.502,-1.797 0.502,-1.354 C 0.502,-0.855 0.32,-0.375 0,0"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="foreground middle bracket"
          id="path3868" />
     </g>
     <g
@@ -154,7 +171,7 @@
       <!-- Left white ")" bracket -->
       <path
          d="M 0,0 L -0.082,0 L -0.238,0 L -0.318,0 C 0.041,-0.357 0.246,-0.846 0.246,-1.354 C 0.246,-1.805 0.084,-2.236 -0.201,-2.578 L -0.119,-2.578 L 0.02,-2.578 L 0.102,-2.578 C 0.359,-2.227 0.5,-1.797 0.5,-1.354 C 0.5,-0.855 0.32,-0.375 0,0"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         class="foreground left bracket"
          id="path3872" />
     </g>
   </g>
