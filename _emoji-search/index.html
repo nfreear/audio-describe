@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="assets/app.css">
+
+  <h1>Emoji Filter Search</h1>
+
+  <emoji-filter>
+    <form>
+      <label>Query
+        <input type="search" name="query" value="mammal">
+      </label>
+
+      <p><button>Submit</button></p>
+
+      <label id="labelID" for="output">Output:</label>
+      <output id="output"></output>
+      <p>
+        <textarea id="area" aria-labelledby="labelID"></textarea>
+      </p>
+    </form>
+  </emoji-filter>
+
+
+<script type="importmap">
+{
+  "imports": {
+    "emoji.json": "https://unpkg.com/emoji.json@^16",
+    "sh:emoji.json": "https://esm.sh/emoji.json@16.0.0",
+    "EmojiFilterElement": "./src/EmojiFilterElement.js"
+  }
+}
+</script>
+
+
+<script type="module">
+  import allEmoji from 'emoji.json' with { type: 'json' };
+  import EmojiFilterElement from 'EmojiFilterElement';
+
+  EmojiFilterElement.define();
+
+  const filter = EmojiFilterElement.query();
+
+  filter.emojis = allEmoji;
+</script>
+
+
+<script type="XX_module">
+emojiSearch();
+
+function emojiSearch () {
+  const searchField = 'subgroup';
+  const FORM = document.querySelector('form');
+  console.debug('All Emoji:', EMOJI);
+
+  FORM.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+
+    const { query, output, area } = ev.target.elements;
+    const { value } = query;
+
+    const filter = EMOJI.filter(it => it[searchField].includes(value));
+    filter.sort((a, b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+
+    output.value = `${filter.length} results`;
+    area.value = JSON.stringify(filter, null, 2);
+
+    console.debug('submit:', value, filter.length, filter, ev);
+  })
+}
+</script>
+
+</html>

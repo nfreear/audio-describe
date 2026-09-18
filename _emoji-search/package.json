@@ -1,0 +1,12 @@
+{
+  "exports": {
+    ".": "src/EmojiFilterElement.js"
+  },
+  "devDependencies": {
+    "emoji.json": "^16.0.0",
+    "servor": "^4.0.2"
+  },
+  "scripts": {
+    "start": "npx servor"
+  }
+}

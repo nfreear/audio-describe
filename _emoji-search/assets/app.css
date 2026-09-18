@@ -1,0 +1,36 @@
+
+body {
+  background-color: #222;
+  color: #f8f8f8;
+  font-family: -apple-system, system-ui, sans-serif;
+  margin: auto;
+  max-width: 32rem;
+  padding: 0 1rem;
+
+  a[href] {
+    color: #acf;
+  }
+}
+
+footer {
+  border-top: 1px dashed gray;
+  margin-top: 3rem;
+}
+
+button,
+input {
+  font-size: inherit;
+  padding: .2rem 1rem;
+}
+
+textarea {
+  font-size: smaller;
+  min-height: 8rem;
+  min-width: 95%;
+  padding: .2rem;
+}
+
+* {
+  outline-offset: .2rem;
+  text-underline-offset: .25rem;
+}
