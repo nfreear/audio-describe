@@ -3,4 +3,8 @@ vtt-data
 blog
 
 *test.html
+local.html
 *BAK*
+.DS_Store
+_*
+*.svg

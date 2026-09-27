@@ -1,48 +1,43 @@
-<svg viewBox="0 0 237 62" xmlns="http://www.w3.org/2000/svg">
-  <title>SEAD</title>
+<svg viewBox="0 0 238 62" xmlns="http://www.w3.org/2000/svg">
+   <title>SEAD</title>
 
+<symbol id="SEAD" viewBox="0 0 238 62">
   <style>
-    rect {
-      fill: #000;
-    }
-
     text {
       dominant-baseline: middle; /* vertical */
-      text-anchor: middle;
+      text-anchor: middle; /* horizontal */
 
-      fill: #fff;
+      /* fill: #fff; */
       font-family: Arial,sans-serif;
       font-size: 66px;
-
-      white-space: collapse;
     }
-
     .se {
       font-weight: 200;
       letter-spacing: -1.5px;
     }
-
     .ad {
       font-weight: 700;
     }
-
     .a {
       font-style: italic;
     }
-
     .bracket {
       font-size: 50px;
       letter-spacing: -1px;
     }
   </style>
 
-  <rect x="0" y="0" height="100%" width="100%"/>
-
-  <text x="50%" y="50%" class="text">
+  <text x="50%" y="50%" class="text" transform="translate(0 7.5)">
     <tspan class="sead"><tspan class="se">SE</tspan><tspan class="ad"><tspan class="a">A</tspan>D</tspan></tspan>
     <tspan
-      dx="-9%" dy="-11%" x_x="183" x_y="42"
+      dx="-16" dy="-7" x_x="183" x_y="42"
       class="bracket"
     >)))</tspan>
   </text>
+</symbol>
+
+<rect x="0" y="0" height="100%" width="100%" fill="#000"/>
+
+<use href="#SEAD" fill="#fff"/>
+
 </svg>
